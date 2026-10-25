@@ -2,7 +2,7 @@
 // THE CRAFT, process storytelling chapters for /the-craft/
 // Each chapter pairs a verified process photograph (see ASSETS.md) with
 // editorial copy about the techniques shown. This page describes the craft
-// traditions behind the style of food Osthir Test celebrates, keep the copy
+// traditions behind the style of food Osthir Flavours celebrates, keep the copy
 // honest and edit it if the restaurant's actual process differs.
 // ─────────────────────────────────────────────────────────────────────────────
 

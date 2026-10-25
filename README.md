@@ -1,6 +1,6 @@
-# Osthir Test, Restaurant Website
+# Osthir Flavours, Restaurant Website
 
-A complete, static, multi-page restaurant website for **Osthir Test**, premium
+A complete, static, multi-page restaurant website for **Osthir Flavours**, premium
 fast-casual biryani, desi comfort food and traditional drinks, in an
 emerald-and-gold editorial design.
 

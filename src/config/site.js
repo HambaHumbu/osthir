@@ -9,11 +9,11 @@
 
 export const site = {
   // Identity
-  name: 'Osthir Test',
+  name: 'Osthir Flavours',
   tagline: 'Magical flavours in the simplest dishes of life.',
   positioning: 'Premium fast-casual Bengali biryani, desi comfort food and traditional drinks in Canada.',
   description:
-    'Osthir Test is a Bengali restaurant in Canada serving dum-cooked biryani, slow-simmered desi classics, and traditional teas and lassis. Magical flavours in the simplest dishes of life.',
+    'Osthir Flavours is a Bengali restaurant in Canada serving dum-cooked biryani, slow-simmered desi classics, and traditional teas and lassis. Magical flavours in the simplest dishes of life.',
 
   // Public URL, also mirrored in src/config/site-url.mjs / .env SITE_URL.
   // Used for canonical links, sitemap.xml, robots.txt and Open Graph URLs.

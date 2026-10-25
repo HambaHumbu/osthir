@@ -1,4 +1,4 @@
-# Asset Manifest, Osthir Test
+# Asset Manifest, Osthir Flavours
 
 Every original asset was visually inspected (not just filename-matched) during
 the build audit on 2026-10-25. Originals in the project root are **never

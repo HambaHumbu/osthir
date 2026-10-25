@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// MENU DATA: Osthir Test
+// MENU DATA: Osthir Flavours
 // ─────────────────────────────────────────────────────────────────────────────
 // Every dish below is paired with a photograph that was visually verified
 // during the asset audit (see ASSETS.md). Descriptions are editorial copy
