@@ -1,0 +1,28 @@
+{
+  "name": "osthir-test-website",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Osthir Test — premium restaurant website (static, Astro + TypeScript)",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "node tests/verify-source.mjs",
+    "lint": "node tests/lint-scripts.mjs",
+    "assets": "node scripts/optimize-images.mjs && node scripts/optimize-videos.mjs",
+    "assets:images": "node scripts/optimize-images.mjs",
+    "assets:videos": "node scripts/optimize-videos.mjs",
+    "test": "node tests/verify-build.mjs",
+    "verify": "npm run build && node tests/verify-build.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.4.0",
+    "astro": "^5.13.0"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "^5.2.0",
+    "playwright": "^1.64.1",
+    "sharp": "^0.34.3"
+  }
+}

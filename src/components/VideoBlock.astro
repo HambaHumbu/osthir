@@ -1,0 +1,76 @@
+---
+import { videoFor } from '../lib/media.js';
+
+// Lazy, respectful video: poster-first, loads on intersection, muted,
+// playsinline, and replaced by the poster alone under reduced motion.
+const { name, label, class: className, eager = false, controls = true } = Astro.props;
+const v = videoFor(name);
+---
+<div class:list={['video-block', className]} data-video-block>
+  <video
+    muted
+    loop
+    playsinline
+    preload="none"
+    poster={v.poster}
+    data-src={v.src}
+    data-eager={eager ? 'true' : undefined}
+    aria-label={label}
+    role="img"
+  ></video>
+  {controls && (
+    <button class="video-block__toggle" type="button" aria-pressed="true" hidden>
+      <svg viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <path class="icon-pause" d="M4 2.5v9M10 2.5v9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
+      <span class="label">Pause</span>
+    </button>
+  )}
+</div>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('[data-video-block]').forEach((block) => {
+    const video = block.querySelector('video');
+    const toggle = block.querySelector('.video-block__toggle');
+    if (!video) return;
+
+    if (reducedMotion) return; // poster only — never load the video
+
+    const attach = () => {
+      if (video.dataset.src && !video.src) {
+        video.src = video.dataset.src;
+        video.play().catch(() => {});
+      }
+    };
+
+    if (video.dataset.eager === 'true') {
+      attach();
+    } else {
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              attach();
+              io.disconnect();
+            }
+          });
+        },
+        { rootMargin: '300px' },
+      );
+      io.observe(block);
+    }
+
+    if (toggle) {
+      toggle.hidden = false;
+      toggle.addEventListener('click', () => {
+        const playing = !video.paused;
+        if (playing) video.pause();
+        else video.play().catch(() => {});
+        toggle.setAttribute('aria-pressed', String(!playing));
+        toggle.querySelector('.label').textContent = playing ? 'Play' : 'Pause';
+      });
+    }
+  });
+</script>

@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Picture from '../components/Picture.astro';
+import VideoBlock from '../components/VideoBlock.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import site from '../config/site.js';
+import { breadcrumbJsonLd } from '../lib/seo.js';
+import { logo } from '../lib/media.js';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Our Story', path: '/our-story/' },
+];
+---
+<BaseLayout
+  title="Our Story"
+  description="Why Osthir Test exists — a belief that the simplest dishes of life, rice and spice and a sealed pot, hold the most magic when every small step is done properly."
+  jsonld={[breadcrumbJsonLd(crumbs)]}
+>
+  <header class="page-hero texture-leaf">
+    <div class="container page-hero--split">
+      <div class="page-hero__inner">
+        <Breadcrumbs items={crumbs} />
+        <p class="kicker" data-reveal>Our Story</p>
+        <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">The Magic Is<br /><span class="serif-i gold">in the Simple</span></h1>
+        <p class="lede" data-reveal style="--reveal-delay:200ms">
+          {site.name} is built on one conviction: magical flavours live in the simplest
+          dishes of life — if, and only if, every small step is done properly.
+        </p>
+      </div>
+      <div class="frame frame--video" data-reveal="right">
+        <VideoBlock name="brand-film" label="A short brand film — spices, a steaming copper pot, tea being poured, and a finished plate of biryani" />
+      </div>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container split">
+      <div class="split__media" data-reveal="left">
+        <div class="frame frame--tall corner-ornament">
+          <Picture name="process-saffron" alt="Hands crumbling saffron threads over steaming rice in a brass bowl" sizes="(min-width: 1024px) 45vw, 100vw" />
+        </div>
+      </div>
+      <div class="split__text" data-reveal="right">
+        <p class="kicker">The Belief</p>
+        <h2 class="display-1" style="margin-top: var(--space-4)">Rice, Spice,<br /><span class="serif-i">a Sealed Pot</span></h2>
+        <p class="lede" style="margin-top: var(--space-4)">
+          The dishes we love most are not complicated. A pot of rice. A handful of whole
+          spices. Time, and a little steam. But simple food forgives nothing — every
+          shortcut shows. So we take the long way on purpose: spices ground by hand,
+          onions fried to bronze, pots sealed with dough and left alone.
+        </p>
+        <p class="lede" style="margin-top: var(--space-4)">
+          That is the whole philosophy. Keep the dish simple. Make the craft obsessive.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--light texture-leaf--light">
+    <div class="container split split--flip on-light">
+      <div class="split__media" data-reveal="right">
+        <div class="frame frame--tall">
+          <Picture name="hero-table-spread" alt="The Osthir Test table — biryani, korma, spiced tea and mango lassi on brass trays" sizes="(min-width: 1024px) 45vw, 100vw" />
+        </div>
+      </div>
+      <div class="split__text" data-reveal="left">
+        <p class="kicker">The Name</p>
+        <h2 class="display-1" style="margin-top: var(--space-4)">A Table That<br /><span class="serif-i">Can't Sit Still</span></h2>
+        <p class="lede" style="margin-top: var(--space-4)">
+          Good food is restless. Steam that won't wait, aromas that cross the room,
+          a table that leans in before the lid is fully lifted. {site.name} is our
+          celebration of that impatience — the joyful kind.
+        </p>
+        <p class="lede" style="margin-top: var(--space-4)">
+          We keep the menu short on purpose: a handful of biryanis, the desi classics
+          we grew up craving, and drinks poured with ceremony. Everything on it has
+          earned its place.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        align="center"
+        kicker="What We Promise"
+        title="Three Things, Every Plate"
+      />
+      <div class="grid grid-3" style="margin-top: var(--space-7)">
+        <div data-reveal style="border: 1px solid var(--line); border-radius: var(--radius-l); padding: var(--space-6); display: grid; gap: var(--space-3);">
+          <span class="chapter__num" style="font-size: 2.6rem">01</span>
+          <h3 class="title-1" style="font-size: 1.3rem">Real ingredients, treated slowly</h3>
+          <p style="color: var(--text-soft); font-size: var(--fs-small)">Whole spices, fresh herbs, saffron you can see. Nothing rushed that shouldn't be.</p>
+        </div>
+        <div data-reveal style="--reveal-delay:120ms; border: 1px solid var(--line); border-radius: var(--radius-l); padding: var(--space-6); display: grid; gap: var(--space-3);">
+          <span class="chapter__num" style="font-size: 2.6rem">02</span>
+          <h3 class="title-1" style="font-size: 1.3rem">Simple dishes, done obsessively</h3>
+          <p style="color: var(--text-soft); font-size: var(--fs-small)">A short menu, cooked the long way. We'd rather do twelve things properly than sixty halfway.</p>
+        </div>
+        <div data-reveal style="--reveal-delay:240ms; border: 1px solid var(--line); border-radius: var(--radius-l); padding: var(--space-6); display: grid; gap: var(--space-3);">
+          <span class="chapter__num" style="font-size: 2.6rem">03</span>
+          <h3 class="title-1" style="font-size: 1.3rem">Honesty on the plate and off it</h3>
+          <p style="color: var(--text-soft); font-size: var(--fs-small)">What you see in our photographs is what arrives at the table. No tricks, no theatre without taste.</p>
+        </div>
+      </div>
+
+      <div class="cta-band" style="margin-top: var(--space-9)">
+        <h2 class="title-1" data-reveal>Taste the story</h2>
+        <div class="hero__cta" data-reveal style="--reveal-delay:120ms">
+          <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="/the-craft/">See the Craft</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import site from '../config/site.js';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Privacy', path: '/privacy/' },
+];
+---
+<BaseLayout
+  title="Privacy"
+  description={`How ${site.name} handles your information — a short, plain-language privacy notice.`}
+  noindex
+>
+  <section class="section texture-leaf" style="padding-top: calc(var(--header-h) + var(--space-8))">
+    <div class="container container--narrow" style="display:grid;gap:var(--space-6)">
+      <Breadcrumbs items={crumbs} />
+      <div>
+        <p class="kicker">Plain Language</p>
+        <h1 class="display-1" style="margin-top:var(--space-4)">Privacy Notice</h1>
+      </div>
+
+      <div style="display:grid;gap:var(--space-4);color:var(--text-soft)">
+        <p><strong style="color:var(--ivory)">What we collect.</strong> If you send us an enquiry, we receive the details you type into the form — your name, email and message. That is all.</p>
+        <p><strong style="color:var(--ivory)">What we don't do.</strong> This website sets no tracking cookies, runs no third-party analytics, and embeds no advertising or fingerprinting services. Fonts, images and videos are all served locally from this site.</p>
+        <p><strong style="color:var(--ivory)">How enquiries are handled.</strong> Form submissions go only to the contact channel configured by the restaurant (a form endpoint or a pre-filled email to the restaurant's own address). Your details are used to answer your enquiry and nothing else.</p>
+        <p><strong style="color:var(--ivory)">Your choices.</strong> You can ask us to delete any message you've sent at any time via the contact page.</p>
+        <p style="font-size:var(--fs-small);color:var(--text-faint)">This notice was last updated in October 2026 and will be revised if the site's tooling changes.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

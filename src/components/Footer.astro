@@ -1,0 +1,82 @@
+---
+import site from '../config/site.js';
+import { logo } from '../lib/media.js';
+
+const year = new Date().getFullYear();
+const { contact, location, social } = site;
+const hasContact = contact.email || contact.phone;
+const hasAddress = location.addressLines;
+const socials = Object.entries(social).filter(([, url]) => url);
+---
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="/" class="brand" aria-label={`${site.name} — home`}>
+          <span class="brand__mark" style={`background:${logo.background}`}>
+            <img src="/media/img/logo-256.webp" width="44" height="44" alt="" loading="lazy" />
+          </span>
+          <span class="brand__word">
+            {site.name}
+            <small>Biryani · Desi · Tea</small>
+          </span>
+        </a>
+        <p>{site.description}</p>
+      </div>
+
+      <div class="footer__col">
+        <h2>Explore</h2>
+        <ul>
+          <li><a href="/menu/">Menu</a></li>
+          <li><a href="/drinks/">Drinks</a></li>
+          <li><a href="/the-craft/">The Craft</a></li>
+          <li><a href="/our-story/">Our Story</a></li>
+          <li><a href="/catering/">Catering</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h2>Visit</h2>
+        {hasAddress ? (
+          <address>
+            {location.addressLines.map((line) => <span>{line}<br /></span>)}
+            {location.city && <span>{location.city}{location.postcode ? ` ${location.postcode}` : ''}<br /></span>}
+          </address>
+        ) : (
+          <p>Our address is being confirmed. <a href="/locations/">See the Visit page</a> for the latest details.</p>
+        )}
+        {location.directionsUrl && (
+          <ul><li><a href={location.directionsUrl} target="_blank" rel="noopener noreferrer">Get directions ↗</a></li></ul>
+        )}
+      </div>
+
+      <div class="footer__col">
+        <h2>Contact</h2>
+        {hasContact ? (
+          <ul>
+            {contact.email && <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>}
+            {contact.phone && <li><a href={`tel:${contact.phoneHref}`}>{contact.phone}</a></li>}
+          </ul>
+        ) : (
+          <p>Contact details are being confirmed — <a href="/contact/">the contact page</a> has the latest.</p>
+        )}
+        {socials.length > 0 && (
+          <ul>
+            {socials.map(([name, url]) => (
+              <li><a href={url} target="_blank" rel="noopener noreferrer">{name[0].toUpperCase() + name.slice(1)} ↗</a></li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+
+    <div class="footer__legal">
+      <span>© {year} {site.name}. All rights reserved.</span>
+      <nav aria-label="Legal">
+        <a href="/privacy/">Privacy</a>
+        <a href="/accessibility/">Accessibility</a>
+        <a href="/sitemap-index.xml">Sitemap</a>
+      </nav>
+    </div>
+  </div>
+</footer>

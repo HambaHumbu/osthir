@@ -1,0 +1,12 @@
+---
+const { question, children } = Astro.props;
+---
+<details class="faq" data-reveal>
+  <summary>
+    <span>{question}</span>
+    <span class="faq__icon" aria-hidden="true">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" /></svg>
+    </span>
+  </summary>
+  <div class="faq__body"><slot /></div>
+</details>

@@ -1,0 +1,31 @@
+---
+import Picture from './Picture.astro';
+import { getCategory } from '../data/menu.js';
+import site from '../config/site.js';
+
+const { item, light = false, revealDelay } = Astro.props;
+const category = getCategory(item.category);
+const price =
+  item.price != null
+    ? new Intl.NumberFormat(site.locale, { style: 'currency', currency: site.currency }).format(item.price)
+    : null;
+---
+<article
+  class:list={['card', { 'card--light': light }]}
+  data-reveal
+  style={revealDelay ? `--reveal-delay:${revealDelay}ms` : undefined}
+  data-card
+  data-category={item.category}
+  data-search={`${item.name} ${item.short} ${item.notes.join(' ')}`.toLowerCase()}
+>
+  <div class="card__media">
+    <Picture name={item.image} alt={item.alt} sizes="(min-width: 1024px) 33vw, 100vw" />
+  </div>
+  <div class="card__body">
+    <span class="card__cat">{category?.name}</span>
+    <h3 class="card__title"><a href={`/menu/${item.slug}/`}>{item.name}</a></h3>
+    <p class="card__text">{item.short}</p>
+    {price && <p class="dish__price">{price}</p>}
+    <span class="card__link">View dish <span aria-hidden="true">→</span></span>
+  </div>
+</article>

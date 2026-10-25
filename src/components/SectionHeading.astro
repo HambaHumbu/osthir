@@ -1,0 +1,8 @@
+---
+const { kicker, title, lede, align = 'start' } = Astro.props;
+---
+<div class="section-heading" style={`display:grid;gap:var(--space-4);justify-items:${align === 'center' ? 'center' : 'start'};text-align:${align};max-width:720px;${align === 'center' ? 'margin-inline:auto;' : ''}`} data-reveal>
+  {kicker && <p class="kicker">{kicker}</p>}
+  <h2 class="display-1">{title}</h2>
+  {lede && <p class="lede">{lede}</p>}
+</div>
