@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import site from '../../config/site.js';
+import { breadcrumbJsonLd, canonical } from '../../lib/seo.js';
+import { href } from '../../lib/url.js';
+import { posts } from '../../data/journal.js';
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Journal', path: '/journal/' },
+  { name: post.title, path: `/journal/${post.slug}/` },
+];
+const fmt = (d) => new Date(d + 'T00:00:00').toLocaleDateString('en-CA', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const articleJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: post.title,
+  description: post.excerpt,
+  datePublished: post.date,
+  image: canonical(`/media/img/${post.image}-1080.jpg`),
+  url: canonical(`/journal/${post.slug}/`),
+  author: { '@type': 'Organization', name: site.name },
+  publisher: { '@type': 'Organization', name: site.name },
+};
+---
+<BaseLayout
+  title={post.title}
+  description={post.excerpt}
+  jsonld={[articleJsonLd, breadcrumbJsonLd(crumbs)]}
+>
+  <article class="section">
+    <div class="container container--narrow">
+      <Breadcrumbs items={crumbs} />
+      <p class="kicker" data-reveal>Journal</p>
+      <h1 class="display-1" data-reveal style="--reveal-delay:100ms">{post.title}</h1>
+      <p class="jcard__date" data-reveal style="--reveal-delay:160ms">{fmt(post.date)}</p>
+      <div class="frame frame--wide" data-reveal style="--reveal-delay:200ms; margin-block: var(--space-6)">
+        <Picture name={post.image} alt={post.alt} sizes="(min-width: 820px) 780px, 100vw" />
+      </div>
+      <div class="prose" data-reveal style="--reveal-delay:260ms">
+        {post.body.map((para) => <p>{para}</p>)}
+      </div>
+      <p style="margin-top: var(--space-7)">
+        <a class="link-quiet" href={href('/journal/')}>More from the journal <span aria-hidden="true">&rsaquo;</span></a>
+      </p>
+    </div>
+  </article>
+</BaseLayout>
