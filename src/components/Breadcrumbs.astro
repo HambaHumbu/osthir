@@ -1,0 +1,18 @@
+---
+const { items = [] } = Astro.props;
+// items: [{ name, path }] — the last item is the current page.
+---
+<nav aria-label="Breadcrumb">
+  <ol class="crumbs">
+    {items.map((item, i) => (
+      <li style="display:inline-flex;align-items:center;gap:var(--space-2)">
+        {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+        {i === items.length - 1 ? (
+          <span aria-current="page">{item.name}</span>
+        ) : (
+          <a href={item.path}>{item.name}</a>
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>

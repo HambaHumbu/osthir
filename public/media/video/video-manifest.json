@@ -1,0 +1,44 @@
+{
+  "hero-loop": {
+    "src": "osthir-v1-hero-loop.mp4",
+    "posterAt": 6,
+    "trim": null,
+    "out": "media/video/hero-loop.mp4",
+    "poster": "media/video/hero-loop-poster.jpg"
+  },
+  "brand-film": {
+    "src": "osthir-v2-brand-film.mp4",
+    "posterAt": 1,
+    "trim": 6.6,
+    "out": "media/video/brand-film.mp4",
+    "poster": "media/video/brand-film-poster.jpg"
+  },
+  "biryani-pot-reveal": {
+    "src": "osthir-v3-biryani-pot-reveal.mp4",
+    "posterAt": 6,
+    "trim": null,
+    "out": "media/video/biryani-pot-reveal.mp4",
+    "poster": "media/video/biryani-pot-reveal-poster.jpg"
+  },
+  "curry-simmer": {
+    "src": "osthir-v4-curry-simmer.mp4",
+    "posterAt": 4,
+    "trim": null,
+    "out": "media/video/curry-simmer.mp4",
+    "poster": "media/video/curry-simmer-poster.jpg"
+  },
+  "malai-tea-pour": {
+    "src": "osthir-v5-malai-tea-pour.mp4",
+    "posterAt": 3,
+    "trim": null,
+    "out": "media/video/malai-tea-pour.mp4",
+    "poster": "media/video/malai-tea-pour-poster.jpg"
+  },
+  "lassi-pour": {
+    "src": "osthir-v6-lassi-pour.mp4",
+    "posterAt": 5,
+    "trim": null,
+    "out": "media/video/lassi-pour.mp4",
+    "poster": "media/video/lassi-pour-poster.jpg"
+  }
+}

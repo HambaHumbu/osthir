@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import site from '../config/site.js';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Accessibility', path: '/accessibility/' },
+];
+---
+<BaseLayout
+  title="Accessibility"
+  description={`Accessibility statement for the ${site.name} website — our commitments and how to report a problem.`}
+>
+  <section class="section texture-leaf" style="padding-top: calc(var(--header-h) + var(--space-8))">
+    <div class="container container--narrow" style="display:grid;gap:var(--space-6)">
+      <Breadcrumbs items={crumbs} />
+      <div>
+        <p class="kicker">Everyone Is Welcome</p>
+        <h1 class="display-1" style="margin-top:var(--space-4)">Accessibility Statement</h1>
+      </div>
+
+      <div style="display:grid;gap:var(--space-4);color:var(--text-soft)">
+        <p>We want everyone to be able to use this website, and we design and test against WCAG 2.2 AA as our target.</p>
+        <p><strong style="color:var(--ivory)">What we do.</strong> Semantic landmarks and headings; full keyboard operability with visible focus; descriptive alternative text for food photography; forms with labels and accessible error messages; sufficient colour contrast; and a functional experience when reduced motion is preferred — decorative video is replaced by still images.</p>
+        <p><strong style="color:var(--ivory)">Known limits.</strong> Photography of food cannot fully convey taste or appearance in words; we describe every dish in text alongside its photo.</p>
+        <p><strong style="color:var(--ivory)">Report a problem.</strong> If anything on this site is hard to use, tell us via the <a class="link-quiet" href="/contact/">contact page</a> — accessibility reports are treated as bugs, not feedback.</p>
+        <p style="font-size:var(--fs-small);color:var(--text-faint)">Venue accessibility details (step-free access, facilities) will be published on the <a class="link-quiet" href="/locations/">Visit page</a> once confirmed.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

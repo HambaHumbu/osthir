@@ -1,0 +1,134 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FoodCard from '../../components/FoodCard.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { categories, menuItems, itemsByCategory } from '../../data/menu.js';
+import { breadcrumbJsonLd, menuJsonLd } from '../../lib/seo.js';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Menu', path: '/menu/' },
+];
+---
+<BaseLayout
+  title="Menu"
+  description="The Osthir Test menu — dum-cooked beef and lamb biryani, desi classics like chicken, beef and duck curries, chicken korma, and traditional teas and lassis."
+  jsonld={[menuJsonLd(), breadcrumbJsonLd(crumbs)]}
+>
+  <header class="page-hero texture-leaf">
+    <div class="container page-hero__inner">
+      <Breadcrumbs items={crumbs} />
+      <p class="kicker" data-reveal>The Menu</p>
+      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Everything,<br /><span class="serif-i gold">Steaming</span></h1>
+      <p class="lede" data-reveal style="--reveal-delay:200ms">
+        {menuItems.length} dishes and drinks, photographed as they are served.
+        Search or filter by what you're craving.
+      </p>
+    </div>
+  </header>
+
+  <section class="section--tight section">
+    <div class="container">
+      <div class="menu-tools" role="search">
+        <div class="menu-search">
+          <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5" />
+            <path d="m12.5 12.5 3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+          <label for="menu-search-input" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search the menu</label>
+          <input
+            id="menu-search-input"
+            type="search"
+            placeholder="Search biryani, korma, lassi…"
+            autocomplete="off"
+            data-menu-search
+          />
+        </div>
+
+        <div class="chips" role="group" aria-label="Filter by category" data-menu-chips>
+          <button class="chip" type="button" data-category="all" aria-pressed="true">
+            All <span class="count">{menuItems.length}</span>
+          </button>
+          {categories.map((cat) => (
+            <button class="chip" type="button" data-category={cat.id} aria-pressed="false">
+              {cat.name} <span class="count">{itemsByCategory(cat.id).length}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <p aria-live="polite" data-menu-status style="font-size: var(--fs-small); color: var(--text-faint); margin-bottom: var(--space-5)"></p>
+
+      {categories.map((cat) => (
+        <section data-category-section={cat.id} aria-labelledby={`menu-cat-${cat.id}`} style="margin-bottom: var(--space-8)">
+          <SectionHeading kicker={cat.tagline} title={cat.name} lede={cat.description} />
+          <div class="grid grid-3" style="margin-top: var(--space-6)">
+            {itemsByCategory(cat.id).map((item, i) => <FoodCard item={item} revealDelay={i * 80} />)}
+          </div>
+        </section>
+      ))}
+
+      <div class="menu-empty" data-menu-empty hidden>
+        <h2 class="title-1">Nothing matches that craving</h2>
+        <p>Try a different search, or clear the filters to see everything.</p>
+        <button class="btn btn--ghost" type="button" data-menu-reset>Clear search & filters</button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const input = document.querySelector('[data-menu-search]');
+    const chips = [...document.querySelectorAll('[data-menu-chips] .chip')];
+    const cards = [...document.querySelectorAll('[data-card]')];
+    const sections = [...document.querySelectorAll('[data-category-section]')];
+    const empty = document.querySelector('[data-menu-empty]');
+    const status = document.querySelector('[data-menu-status]');
+    const reset = document.querySelector('[data-menu-reset]');
+
+    let activeCategory = 'all';
+
+    function apply() {
+      const query = (input?.value ?? '').trim().toLowerCase();
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const inCategory = activeCategory === 'all' || card.dataset.category === activeCategory;
+        const matches = !query || (card.dataset.search ?? '').includes(query);
+        const show = inCategory && matches;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+
+      sections.forEach((section) => {
+        const anyVisible = [...section.querySelectorAll('[data-card]')].some((c) => !c.hidden);
+        const categoryDimmed = activeCategory !== 'all' && section.dataset.categorySection !== activeCategory;
+        section.hidden = !anyVisible || categoryDimmed;
+      });
+
+      if (empty) empty.hidden = visible !== 0;
+      if (status) {
+        status.textContent =
+          query || activeCategory !== 'all'
+            ? `${visible} ${visible === 1 ? 'item' : 'items'} shown`
+            : '';
+      }
+    }
+
+    input?.addEventListener('input', apply);
+    chips.forEach((chip) => {
+      chip.addEventListener('click', () => {
+        activeCategory = chip.dataset.category ?? 'all';
+        chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+        apply();
+      });
+    });
+    reset?.addEventListener('click', () => {
+      if (input) input.value = '';
+      activeCategory = 'all';
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.category === 'all')));
+      apply();
+      input?.focus();
+    });
+  </script>
+</BaseLayout>

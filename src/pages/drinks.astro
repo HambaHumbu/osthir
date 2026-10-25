@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import FoodCard from '../components/FoodCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import VideoBlock from '../components/VideoBlock.astro';
+import Picture from '../components/Picture.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { itemsByCategory } from '../data/menu.js';
+import { breadcrumbJsonLd } from '../lib/seo.js';
+
+const drinks = itemsByCategory('drinks');
+const teas = drinks.filter((d) => ['lemon-tea', 'mint-tea', 'saffron-tea'].includes(d.slug));
+const lassis = drinks.filter((d) => !['lemon-tea', 'mint-tea', 'saffron-tea'].includes(d.slug));
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Drinks', path: '/drinks/' },
+];
+---
+<BaseLayout
+  title="Drinks"
+  description="Traditional drinks at Osthir Test — lemon, mint and saffron teas, regular and mango lassi, and pistachio badam milk, poured with a little theatre."
+  jsonld={[breadcrumbJsonLd(crumbs)]}
+>
+  <header class="page-hero texture-leaf">
+    <div class="container page-hero--split">
+      <div class="page-hero__inner">
+        <Breadcrumbs items={crumbs} />
+        <p class="kicker" data-reveal>The Drinks Collection</p>
+        <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Poured<br /><span class="serif-i gold">Slow</span></h1>
+        <p class="lede" data-reveal style="--reveal-delay:200ms">
+          Teas steeped with citrus, mint and saffron. Lassis poured thick and cold.
+          The glass matters as much as what's in it.
+        </p>
+      </div>
+      <div class="frame frame--video" data-reveal="right">
+        <VideoBlock name="malai-tea-pour" label="Milky tea poured in a steaming stream from an ornate brass jug into a glass" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Teas -->
+  <section class="section--tight section">
+    <div class="container">
+      <SectionHeading kicker="Brewed" title="Teas, Three Ways" lede="Bright lemon, hand-torn mint, and saffron steeped until the glass turns to amber." />
+      <div class="grid grid-3" style="margin-top: var(--space-7)">
+        {teas.map((item, i) => <FoodCard item={item} revealDelay={i * 120} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Editorial interlude -->
+  <section class="section section--light texture-leaf--light">
+    <div class="container split on-light">
+      <div class="split__text" data-reveal="left">
+        <p class="kicker">The Pull</p>
+        <h2 class="display-1" style="margin-top: var(--space-4)">Tea with <span class="serif-i">a Little Height</span></h2>
+        <p class="lede" style="margin-top: var(--space-4)">
+          Pulled from jug to glass, tea aerates, froths and softens. It is a small theatre
+          that you can taste — and the reason our chai arrives with a crown of foam.
+        </p>
+      </div>
+      <div class="split__media" data-reveal="right">
+        <div class="frame corner-ornament" style="aspect-ratio: 16/11">
+          <Picture name="process-tea-pull" alt="Milky tea poured from a height in a long steaming stream, froth gathering in the glass" sizes="(min-width: 1024px) 50vw, 100vw" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lassis & milk -->
+  <section class="section texture-leaf grain">
+    <div class="container">
+      <SectionHeading kicker="Chilled" title="Lassis & Badam Milk" lede="Thick, cold and crowned with nuts — the classic cool-down beside anything spicy." />
+      <div class="grid grid-3" style="margin-top: var(--space-7)">
+        {lassis.map((item, i) => <FoodCard item={item} revealDelay={i * 120} />)}
+      </div>
+
+      <div class="frame frame--video" style="margin-top: var(--space-8)" data-reveal>
+        <VideoBlock name="lassi-pour" label="Mango lassi poured thick into a tall glass and topped with fresh mango" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section--tight section" style="border-top: 1px solid var(--line)">
+    <div class="container cta-band">
+      <h2 class="title-1" data-reveal>Something to eat with that?</h2>
+      <div class="hero__cta" data-reveal style="--reveal-delay:120ms">
+        <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

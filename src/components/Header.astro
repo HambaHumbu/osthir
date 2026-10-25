@@ -1,0 +1,132 @@
+---
+import site from '../config/site.js';
+import { orderAction } from '../lib/order.js';
+import { logo } from '../lib/media.js';
+
+const order = orderAction();
+const pathname = Astro.url.pathname;
+
+const links = [
+  { href: '/menu/', label: 'Menu' },
+  { href: '/drinks/', label: 'Drinks' },
+  { href: '/the-craft/', label: 'The Craft' },
+  { href: '/our-story/', label: 'Our Story' },
+  { href: '/locations/', label: 'Visit' },
+  { href: '/contact/', label: 'Contact' },
+];
+
+const isActive = (href) =>
+  href === '/' ? pathname === '/' : pathname.startsWith(href);
+---
+<header class="site-header" id="site-header">
+  <div class="container container--wide nav">
+    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+      <span class="brand__mark" style={`background:${logo.background}`}>
+        <img src="/media/img/logo-256.webp" width="44" height="44" alt="" fetchpriority="high" />
+      </span>
+      <span class="brand__word">
+        {site.name}
+        <small>Biryani · Desi · Tea</small>
+      </span>
+    </a>
+
+    <nav aria-label="Primary">
+      <ul class="nav__links">
+        {links.map((link) => (
+          <li>
+            <a
+              class="nav__link"
+              href={link.href}
+              aria-current={isActive(link.href) ? 'page' : undefined}
+            >{link.label}</a>
+          </li>
+        ))}
+        <li>
+          <a
+            class="btn btn--gold nav__cta"
+            href={order.href}
+            {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          >{order.label}</a>
+        </li>
+      </ul>
+    </nav>
+
+    <button
+      class="nav__toggle"
+      type="button"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+      aria-label="Open menu"
+    >
+      <svg class="icon-menu" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="M2 5h16M2 10h16M2 15h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+      <svg class="icon-close" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+        <path d="m4 4 12 12M16 4 4 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+      </svg>
+    </button>
+  </div>
+</header>
+
+<div class="drawer texture-leaf" id="nav-drawer" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+  <nav aria-label="Mobile">
+    <ul class="drawer__links">
+      {links.map((link, i) => (
+        <li>
+          <a
+            href={link.href}
+            style={`transition-delay:${60 + i * 45}ms`}
+            aria-current={isActive(link.href) ? 'page' : undefined}
+          >
+            {link.label}
+            <span class="idx">0{i + 1}</span>
+          </a>
+        </li>
+      ))}
+      <li>
+        <a href={order.href} style={`transition-delay:${60 + links.length * 45}ms`} {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+          {order.label}
+          <span class="idx">→</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <p class="drawer__foot">{site.tagline}</p>
+</div>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = document.querySelector('.nav__toggle');
+  const drawer = document.getElementById('nav-drawer');
+
+  const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  let lastFocused = null;
+  function setDrawer(open) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    drawer.classList.toggle('is-open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      lastFocused = document.activeElement;
+      drawer.hidden = false;
+      drawer.querySelector('a')?.focus();
+    } else {
+      window.setTimeout(() => { if (!drawer.classList.contains('is-open')) drawer.hidden = true; }, 420);
+      if (lastFocused instanceof HTMLElement) lastFocused.focus();
+    }
+  }
+
+  toggle?.addEventListener('click', () =>
+    setDrawer(toggle.getAttribute('aria-expanded') !== 'true'),
+  );
+  drawer?.addEventListener('click', (e) => {
+    if (e.target instanceof HTMLAnchorElement) setDrawer(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer?.classList.contains('is-open')) setDrawer(false);
+  });
+</script>

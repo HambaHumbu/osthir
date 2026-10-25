@@ -1,0 +1,87 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
+import FoodCard from '../../components/FoodCard.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import site from '../../config/site.js';
+import { menuItems, relatedItems, getCategory } from '../../data/menu.js';
+import { breadcrumbJsonLd, menuItemJsonLd } from '../../lib/seo.js';
+import { orderAction } from '../../lib/order.js';
+
+export function getStaticPaths() {
+  return menuItems.map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const category = getCategory(item.category);
+const related = relatedItems(item);
+const order = orderAction();
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Menu', path: '/menu/' },
+  { name: item.name, path: `/menu/${item.slug}/` },
+];
+
+const price =
+  item.price != null
+    ? new Intl.NumberFormat(site.locale, { style: 'currency', currency: site.currency }).format(item.price)
+    : null;
+---
+<BaseLayout
+  title={item.name}
+  description={item.short}
+  jsonld={[menuItemJsonLd(item), breadcrumbJsonLd(crumbs)]}
+>
+  <article class="section texture-leaf" style="padding-top: calc(var(--header-h) + var(--space-7))">
+    <div class="container">
+      <Breadcrumbs items={crumbs} />
+
+      <div class="dish" style="margin-top: var(--space-6)">
+        <div class="dish__media" data-reveal="left">
+          <div class="frame frame--wide corner-ornament">
+            <Picture
+              name={item.image}
+              alt={item.alt}
+              sizes="(min-width: 1024px) 52vw, 100vw"
+              loading="eager"
+              fetchpriority="high"
+            />
+          </div>
+        </div>
+
+        <div class="dish__body">
+          <p class="kicker" data-reveal>{category?.name}</p>
+          <h1 class="display-1" data-reveal style="--reveal-delay:100ms">{item.name}</h1>
+          {price && <p class="dish__price">{price}</p>}
+          <p class="lede" data-reveal style="--reveal-delay:200ms">{item.description}</p>
+
+          <ul class="dish__notes" data-reveal style="--reveal-delay:280ms">
+            {item.notes.map((note) => <li>{note}</li>)}
+          </ul>
+
+          <div class="hero__cta" data-reveal style="--reveal-delay:360ms">
+            <a
+              class="btn btn--gold"
+              href={order.href}
+              {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >{order.connected ? order.label : 'See the Menu'} <span class="btn__arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="/menu/">Back to Menu</a>
+          </div>
+          {!order.connected && (
+            <p style="font-size: var(--fs-small); color: var(--text-faint)" data-reveal>
+              Online ordering isn't connected yet — find us via the <a class="link-quiet" href="/locations/">Visit page</a>.
+            </p>
+          )}
+        </div>
+      </div>
+
+      <section aria-labelledby="related-heading" style="margin-top: var(--space-9)">
+        <h2 id="related-heading" class="title-1" data-reveal>You might also like</h2>
+        <div class="grid grid-3" style="margin-top: var(--space-6)">
+          {related.map((rel, i) => <FoodCard item={rel} revealDelay={i * 100} />)}
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

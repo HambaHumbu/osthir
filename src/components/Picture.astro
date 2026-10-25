@@ -1,0 +1,31 @@
+---
+import { pictureFor } from '../lib/media.js';
+
+const {
+  name,
+  alt = '',
+  sizes = '(min-width: 1024px) 50vw, 100vw',
+  loading = 'lazy',
+  fetchpriority,
+  class: className,
+  style,
+} = Astro.props;
+
+const p = pictureFor(name);
+---
+<picture class={className} style={style}>
+  <source type="image/avif" srcset={p.avif} sizes={sizes} />
+  <source type="image/webp" srcset={p.webp} sizes={sizes} />
+  <img
+    src={p.fallback}
+    srcset={p.jpeg}
+    sizes={sizes}
+    width={p.width}
+    height={p.height}
+    alt={alt}
+    loading={loading}
+    decoding="async"
+    fetchpriority={fetchpriority}
+    style={`background-image:url('${p.placeholder}');background-size:cover;background-position:center;`}
+  />
+</picture>
