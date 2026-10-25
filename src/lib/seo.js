@@ -43,8 +43,14 @@ export function restaurantJsonLd() {
     data.areaServed = { '@type': 'Country', name: location.country };
   }
   if (location.geo) data.geo = { '@type': 'GeoCoordinates', ...location.geo };
-  if (location.openingHours) {
-    data.openingHours = location.openingHours.map((h) => `${h.days} ${h.hours}`);
+  // Structured hours from hoursSpec (24-hour times). Same hours every day.
+  if (location.hoursSpec) {
+    data.openingHoursSpecification = {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+      opens: location.hoursSpec.opens,
+      closes: location.hoursSpec.closes,
+    };
   }
   if (site.orderingUrl) {
     data.potentialAction = {

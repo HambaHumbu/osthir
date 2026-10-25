@@ -10,7 +10,7 @@ export const craftChapters = [
   {
     id: 'whole-spices',
     number: '01',
-    title: 'Whole Spices, Ground by Hand',
+    title: 'Whole spices, ground by hand',
     image: 'process-spice-mortar',
     alt: 'Hands grinding cardamom, cloves, cinnamon and dried chillies in a brass mortar and pestle, spice dust in the air.',
     kicker: 'The foundation',
@@ -19,7 +19,7 @@ export const craftChapters = [
   {
     id: 'fried-onions',
     number: '02',
-    title: 'Onions, Fried to Bronze',
+    title: 'Onions, fried to bronze',
     image: 'process-fried-onion',
     alt: 'Crisp fried onions lifted from a brass pan on a slotted spoon, oil dripping back into the pan.',
     kicker: 'The sweetness',
@@ -28,7 +28,7 @@ export const craftChapters = [
   {
     id: 'saffron',
     number: '03',
-    title: 'Saffron, Thread by Thread',
+    title: 'Saffron, thread by thread',
     image: 'process-saffron',
     alt: 'Fingers crumbling saffron threads over a steaming brass bowl of rice, saffron falling through steam.',
     kicker: 'The gold',
@@ -37,7 +37,7 @@ export const craftChapters = [
   {
     id: 'ghee',
     number: '04',
-    title: 'Ghee, Poured Slow',
+    title: 'Ghee, poured slow',
     image: 'process-ghee-pour',
     alt: 'Melted ghee poured in a thin stream from a small brass cup onto steaming white rice.',
     kicker: 'The richness',
@@ -46,7 +46,7 @@ export const craftChapters = [
   {
     id: 'dum-seal',
     number: '05',
-    title: 'Sealed for Dum',
+    title: 'Sealed for dum',
     image: 'process-dum-seal',
     alt: 'Hands pressing a ring of dough around the rim of a brass handi pot to seal it for dum cooking.',
     kicker: 'The patience',
@@ -55,7 +55,7 @@ export const craftChapters = [
   {
     id: 'mint',
     number: '06',
-    title: 'Mint, Torn Not Cut',
+    title: 'Mint, torn not cut',
     image: 'process-mint-torn',
     alt: 'Hands tearing fresh mint leaves over a green ceramic bowl, drops of water on the leaves.',
     kicker: 'The freshness',
@@ -64,16 +64,16 @@ export const craftChapters = [
   {
     id: 'tea-pull',
     number: '07',
-    title: 'Tea, Poured from a Height',
+    title: 'Tea, poured from a height',
     image: 'process-tea-pull',
     alt: 'Milky tea poured in a long steaming stream from one glass jug into a smaller glass, froth forming.',
-    kicker: 'The theatre',
-    text: 'Pulled from a height, tea aerates and froths, a small theatre that softens the brew and wakes the spices.',
+    kicker: 'The pour',
+    text: 'Pulled from a height, tea aerates and froths. The froth softens the brew and lifts the spices.',
   },
   {
     id: 'lassi-pour',
     number: '08',
-    title: 'Lassi, Poured Thick',
+    title: 'Lassi, poured thick',
     image: 'mango-lassi-pour',
     alt: 'Thick mango lassi poured from a brass jug into a tall glass while pistachio is dusted over the top.',
     kicker: 'The finish',

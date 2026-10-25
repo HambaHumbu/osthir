@@ -59,7 +59,7 @@ fold, poster-first, and replaced by the poster under `prefers-reduced-motion`.
 
 ## Optimization status
 
-- Images: AVIF + WebP + JPEG at 3–4 responsive widths each, LQIP placeholders
+- Images: AVIF + WebP + JPEG at 3 to 4 responsive widths each, LQIP placeholders
   embedded via `src/data/media-manifest.json`. Re-run: `npm run assets:images`.
 - Videos: re-encoded H.264 CRF 26 + `faststart`, audio stripped, poster JPG/WebP
   per video. Re-run: `npm run assets:videos`.

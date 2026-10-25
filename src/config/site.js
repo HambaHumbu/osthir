@@ -38,8 +38,12 @@ export const site = {
     country: 'Canada',
     directionsUrl: null, // e.g. Google Maps share link
     mapEmbedUrl: null, // e.g. Google Maps *embed* URL (iframe src)
-    geo: null, // { lat: 23.8, lng: 90.4 } once the real address is known
-    openingHours: null, // e.g. [{ days: 'Mon–Sun', hours: '11:30–22:00' }]
+    geo: null, // { lat: 43.65, lng: -79.38 } once the real address is known
+    // Planned service hours, confirmed by the owner. Display strings use words,
+    // never dashes; hoursSpec carries 24-hour times for schema.org.
+    openingHours: [{ days: 'Every day', hours: '11 AM to 2 AM' }],
+    hoursSpec: { opens: '11:00', closes: '02:00' },
+    openingDate: null, // ISO date once set; gates the "Open now" badge
     accessibilityNotes: null, // e.g. 'Step-free entrance; accessible washroom.'
   },
 

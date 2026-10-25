@@ -44,7 +44,7 @@ const socials = Object.entries(social).filter(([, url]) => url);
             {location.city && <span>{location.city}{location.postcode ? ` ${location.postcode}` : ''}<br /></span>}
           </address>
         ) : (
-          <p>Our address is being confirmed. <a href={href('/locations/')}>See the Visit page</a> for the latest details.</p>
+          <p>Opening soon in Canada. Open 11 AM to 2 AM, every day. <a href={href('/locations/')}>Visit details</a>.</p>
         )}
         {location.directionsUrl && (
           <ul><li><a href={location.directionsUrl} target="_blank" rel="noopener noreferrer">Get directions ↗</a></li></ul>
@@ -59,7 +59,7 @@ const socials = Object.entries(social).filter(([, url]) => url);
             {contact.phone && <li><a href={`tel:${contact.phoneHref}`}>{contact.phone}</a></li>}
           </ul>
         ) : (
-          <p>Contact details are being confirmed, <a href={href('/contact/')}>the contact page</a> has the latest.</p>
+          <p>Reach us on <a href={href('/contact/')}>the contact page</a>. Phone and email arrive with opening.</p>
         )}
         {socials.length > 0 && (
           <ul>

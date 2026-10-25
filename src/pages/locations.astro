@@ -17,17 +17,17 @@ const crumbs = [
 ];
 ---
 <BaseLayout
-  title="Visit Us"
-  description="Find Osthir Flavours, address, opening hours, directions and contact details."
+  title="Visit"
+  description="Osthir Flavours is opening soon in Canada. Planned hours are 11 AM to 2 AM, every day. Here is how to reach us before then."
   jsonld={[breadcrumbJsonLd(crumbs)]}
 >
   <header class="page-hero texture-leaf">
     <div class="container page-hero__inner">
       <Breadcrumbs items={crumbs} />
       <p class="kicker" data-reveal>Visit</p>
-      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Find <span class="serif-i gold">the Table</span></h1>
+      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Find <span class="serif-i gold">the table</span></h1>
       <p class="lede" data-reveal style="--reveal-delay:200ms">
-        Everything you need to find us, call us, and know when the pots are on.
+        We are opening soon in Canada. Here are the planned hours and the ways to reach us before then.
       </p>
     </div>
   </header>
@@ -45,8 +45,8 @@ const crumbs = [
             </address>
           ) : (
             <p style="color: var(--text-soft); font-size: var(--fs-small)">
-              Our address is being confirmed and will be published here soon.
-              Until then, this page intentionally shows no fabricated location.
+              Opening soon in Canada. The exact address will be announced shortly.
+              Planned hours are listed here beside this.
             </p>
           )}
           {location.directionsUrl && (
@@ -55,17 +55,17 @@ const crumbs = [
         </div>
 
         <div data-reveal style="--reveal-delay:120ms; border: 1px solid var(--line); border-radius: var(--radius-l); padding: var(--space-6); display: grid; gap: var(--space-3); align-content: start;">
-          <p class="kicker kicker--bare">Opening Hours</p>
+          <p class="kicker kicker--bare">Opening hours</p>
           {hasHours ? (
             <ul style="list-style: none; padding: 0; color: var(--text-soft); font-size: var(--fs-small); display: grid; gap: var(--space-2)">
               {location.openingHours.map((h) => <li style="display:flex;justify-content:space-between;gap:var(--space-4)"><span>{h.days}</span><span>{h.hours}</span></li>)}
             </ul>
           ) : (
             <p style="color: var(--text-soft); font-size: var(--fs-small)">
-              Opening hours are being confirmed. Check back soon, we will not
-              publish times we can't keep.
+              Hours will be confirmed closer to opening.
             </p>
           )}
+          <p style="color: var(--text-faint); font-size: var(--fs-micro)">Planned hours. Confirmed at opening.</p>
         </div>
 
         <div data-reveal style="--reveal-delay:240ms; border: 1px solid var(--line); border-radius: var(--radius-l); padding: var(--space-6); display: grid; gap: var(--space-3); align-content: start;">
@@ -74,7 +74,7 @@ const crumbs = [
           {contact.email && <p><a class="link-quiet" href={`mailto:${contact.email}`}>{contact.email}</a></p>}
           {!contact.phone && !contact.email && (
             <p style="color: var(--text-soft); font-size: var(--fs-small)">
-              Phone and email are being connected. The <a class="link-quiet" href={href('/contact/')}>contact page</a> will carry them first.
+              Reach us on the <a class="link-quiet" href={href('/contact/')}>contact page</a> for now. A phone line and email arrive with opening.
             </p>
           )}
           {location.accessibilityNotes && (
@@ -96,8 +96,8 @@ const crumbs = [
         </div>
       ) : (
         <div style="margin-top: var(--space-8); border: 1px dashed var(--line-strong); border-radius: var(--radius-l); padding: var(--space-8); text-align: center; color: var(--text-faint)" data-reveal>
-          <p class="title-1" style="margin-bottom: var(--space-3)">Map coming with the confirmed address</p>
-          <p style="font-size: var(--fs-small)">A verified map and directions link will appear here once the restaurant's real address is configured.</p>
+          <p class="title-1" style="margin-bottom: var(--space-3)">A map arrives with the address</p>
+          <p style="font-size: var(--fs-small)">A map and directions will appear here once the address is announced.</p>
         </div>
       )}
     </div>
@@ -105,12 +105,12 @@ const crumbs = [
 
   <section class="section--tight section" style="border-top: 1px solid var(--line)">
     <div class="container cta-band">
-      <h2 class="title-1" data-reveal>Can't wait?</h2>
+      <h2 class="title-1" data-reveal>Want to hear first?</h2>
       <div class="hero__cta" data-reveal style="--reveal-delay:100ms">
         <a class="btn btn--gold" href={order.href} {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
           {order.label} <span class="btn__arrow" aria-hidden="true">→</span>
         </a>
-        <a class="btn btn--ghost" href={href('/contact/')}>Contact Us</a>
+        <a class="btn btn--ghost" href={href('/contact/')}>Get in touch</a>
       </div>
     </div>
   </section>

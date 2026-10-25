@@ -6,7 +6,7 @@ import { videoFor } from '../lib/media.js';
 const { name, label, class: className, eager = false, controls = true } = Astro.props;
 const v = videoFor(name);
 ---
-<div class:list={['video-block', className]} data-video-block>
+<div class:list={['video-block', className]} data-video-block role="img" aria-label={label}>
   <video
     muted
     loop
@@ -15,8 +15,7 @@ const v = videoFor(name);
     poster={v.poster}
     data-src={v.src}
     data-eager={eager ? 'true' : undefined}
-    aria-label={label}
-    role="img"
+    aria-hidden="true"
   ></video>
   {controls && (
     <button class="video-block__toggle" type="button" aria-pressed="true" hidden>
