@@ -1,0 +1,58 @@
+---
+import site from '../config/site.js';
+import { href } from '../lib/url.js';
+import { statusDefault } from '../lib/status.js';
+import { defaultCity } from '../data/places.js';
+
+const status = statusDefault();
+const { openingDate, hoursSpec } = site.location;
+---
+<div
+  class="statusbar"
+  data-opening-date={openingDate ?? ''}
+  data-opens={hoursSpec?.opens ?? ''}
+  data-closes={hoursSpec?.closes ?? ''}
+>
+  <div class="container container--wide statusbar__row">
+    <span class="statusbar__city">
+      <svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true">
+        <path d="M8 1.5a4.5 4.5 0 0 0-4.5 4.5c0 3.4 4.5 8.5 4.5 8.5s4.5-5.1 4.5-8.5A4.5 4.5 0 0 0 8 1.5Z" stroke="currentColor" stroke-width="1.3"/>
+        <circle cx="8" cy="6" r="1.6" stroke="currentColor" stroke-width="1.3"/>
+      </svg>
+      <span><span class="sb-label">Your city: </span><b data-city>{defaultCity}</b></span>
+    </span>
+    <span class="statusbar__chip" data-status-chip data-state={status.state}>{status.label}</span>
+    <span class="statusbar__links">
+      <a href={href('/menu/')}>View menu</a>
+      <a href={href('/locations/')}>Hours and details</a>
+      <button type="button" data-open-panel="city">Change city</button>
+      <button type="button" data-remove-city hidden>Remove city</button>
+    </span>
+  </div>
+</div>
+
+<script>
+  // City memory in guarded localStorage. The bar works fully if storage is blocked.
+  const KEY = 'osthir.city';
+  const safe = {
+    get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch {} },
+    del(k) { try { localStorage.removeItem(k); } catch {} },
+  };
+  const cityEl = document.querySelector('[data-city]');
+  const removeBtn = document.querySelector('[data-remove-city]');
+
+  function render() {
+    const c = safe.get(KEY);
+    if (c && cityEl) { cityEl.textContent = c; removeBtn?.removeAttribute('hidden'); }
+    else { if (cityEl) cityEl.textContent = 'Canada'; removeBtn?.setAttribute('hidden', ''); }
+  }
+  render();
+
+  // The city finder dispatches this when a city is chosen.
+  document.addEventListener('osthir:city', (e) => { safe.set(KEY, e.detail); render(); });
+  removeBtn?.addEventListener('click', () => { safe.del(KEY); render(); });
+
+  // Expose the stored city so sign-up forms can prefill it.
+  window.osthirCity = () => safe.get(KEY) || '';
+</script>

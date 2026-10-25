@@ -5,6 +5,8 @@ import { canonical, restaurantJsonLd, websiteJsonLd } from '../lib/seo.js';
 import { href, routePath } from '../lib/url.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import StatusBar from '../components/StatusBar.astro';
+import SitePanels from '../components/SitePanels.astro';
 
 const {
   title,
@@ -99,11 +101,13 @@ const fontFaces = `@font-face {
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to main content</a>
+    <StatusBar />
     <Header />
     <main id="main">
       <slot />
     </main>
     <Footer />
+    <SitePanels />
 
     <button class="to-top" type="button" aria-label="Back to top" hidden>
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
