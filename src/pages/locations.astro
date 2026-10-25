@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import site from '../config/site.js';
 import { breadcrumbJsonLd } from '../lib/seo.js';
 import { orderAction } from '../lib/order.js';
+import { href } from '../lib/url.js';
 
 const order = orderAction();
 const { location, contact } = site;
@@ -17,7 +18,7 @@ const crumbs = [
 ---
 <BaseLayout
   title="Visit Us"
-  description="Find Osthir Test — address, opening hours, directions and contact details."
+  description="Find Osthir Test, address, opening hours, directions and contact details."
   jsonld={[breadcrumbJsonLd(crumbs)]}
 >
   <header class="page-hero texture-leaf">
@@ -61,7 +62,7 @@ const crumbs = [
             </ul>
           ) : (
             <p style="color: var(--text-soft); font-size: var(--fs-small)">
-              Opening hours are being confirmed. Check back soon — we will not
+              Opening hours are being confirmed. Check back soon, we will not
               publish times we can't keep.
             </p>
           )}
@@ -73,7 +74,7 @@ const crumbs = [
           {contact.email && <p><a class="link-quiet" href={`mailto:${contact.email}`}>{contact.email}</a></p>}
           {!contact.phone && !contact.email && (
             <p style="color: var(--text-soft); font-size: var(--fs-small)">
-              Phone and email are being connected. The <a class="link-quiet" href="/contact/">contact page</a> will carry them first.
+              Phone and email are being connected. The <a class="link-quiet" href={href('/contact/')}>contact page</a> will carry them first.
             </p>
           )}
           {location.accessibilityNotes && (
@@ -109,7 +110,7 @@ const crumbs = [
         <a class="btn btn--gold" href={order.href} {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
           {order.label} <span class="btn__arrow" aria-hidden="true">→</span>
         </a>
-        <a class="btn btn--ghost" href="/contact/">Contact Us</a>
+        <a class="btn btn--ghost" href={href('/contact/')}>Contact Us</a>
       </div>
     </div>
   </section>

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Osthir Test — image optimization pipeline.
+ * Osthir Test, image optimization pipeline.
  *
  * Reads the ORIGINAL photographs and logo from the project root (never
  * modifies them) and writes responsive AVIF/WebP/JPEG derivatives to

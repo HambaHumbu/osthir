@@ -6,6 +6,7 @@ import FoodCard from '../components/FoodCard.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import site from '../config/site.js';
 import { orderAction } from '../lib/order.js';
+import { href } from '../lib/url.js';
 import { itemsByCategory } from '../data/menu.js';
 import { craftChapters } from '../data/craft.js';
 
@@ -13,8 +14,12 @@ const order = orderAction();
 const biryanis = itemsByCategory('biryani');
 const featuredDrinks = itemsByCategory('drinks').filter((d) => d.featured);
 const craftPreview = craftChapters.slice(0, 3);
+
+const pageTitle = 'Bengali Biryani & Desi Restaurant in Canada';
+const pageDescription =
+  `${site.name} is a Bengali restaurant in Canada serving dum-cooked biryani, slow-simmered desi curries, chicken korma, and traditional teas and lassis. Big flavour, no ordinary biryani.`;
 ---
-<BaseLayout>
+<BaseLayout title={pageTitle} description={pageDescription}>
   <!-- ── 1. Cinematic hero ─────────────────────────────────────────────── -->
   <section class="hero" aria-label="Welcome">
     <div class="hero__media">
@@ -24,17 +29,17 @@ const craftPreview = craftChapters.slice(0, 3);
 
     <div class="container container--wide hero__inner">
       <div class="hero__content">
-        <p class="kicker" data-reveal>{site.name} · Biryani & Desi Kitchen</p>
+        <p class="kicker" data-reveal>{site.name} · Bengali Biryani & Desi Kitchen</p>
         <h1 class="display-hero" data-reveal style="--reveal-delay:120ms">
           Big Flavour.<br /><span class="serif-i gold">No Ordinary Biryani.</span>
         </h1>
         <p class="lede" data-reveal style="--reveal-delay:240ms">
-          Creating magical flavours in the simplest dishes of life — dum-sealed biryani,
+          Creating magical flavours in the simplest dishes of life, dum-sealed biryani,
           slow-simmered desi classics, and teas poured with theatre.
         </p>
         <div class="hero__cta" data-reveal style="--reveal-delay:360ms">
-          <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="/the-craft/">The Craft</a>
+          <a class="btn btn--gold" href={href('/menu/')}>Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href={href('/the-craft/')}>The Craft</a>
         </div>
       </div>
     </div>
@@ -69,13 +74,13 @@ const craftPreview = craftChapters.slice(0, 3);
       <SectionHeading
         kicker="Signature"
         title="Biryani, Taken Seriously"
-        lede="Layered rice, saffron, fried onion and slow-cooked meat — sealed and steamed until the whole pot smells like an occasion."
+        lede="Layered rice, saffron, fried onion and slow-cooked meat, sealed and steamed until the whole pot smells like an occasion."
       />
       <div class="grid grid-2" style="margin-top: var(--space-7)">
         {biryanis.map((item, i) => <FoodCard item={item} revealDelay={i * 120} />)}
       </div>
       <p style="margin-top: var(--space-6)" data-reveal>
-        <a class="link-quiet" href="/menu/">See the full menu <span aria-hidden="true">→</span></a>
+        <a class="link-quiet" href={href('/menu/')}>See the full menu <span aria-hidden="true">→</span></a>
       </p>
     </div>
   </section>
@@ -91,7 +96,7 @@ const craftPreview = craftChapters.slice(0, 3);
             Hand-ground spices, bronze-fried onions, saffron crumbled thread by thread,
             and a dough seal that keeps every drop of steam where it belongs.
           </p>
-          <p style="margin-top: var(--space-6)"><a class="btn btn--ghost-dark" href="/the-craft/">Follow the craft <span class="btn__arrow" aria-hidden="true">→</span></a></p>
+          <p style="margin-top: var(--space-6)"><a class="btn btn--ghost-dark" href={href('/the-craft/')}>Follow the craft <span class="btn__arrow" aria-hidden="true">→</span></a></p>
         </div>
         <div class="split__media" data-reveal="right">
           <div class="grid grid-3" style="gap: var(--space-4)">
@@ -114,7 +119,7 @@ const craftPreview = craftChapters.slice(0, 3);
           <div class="frame frame--wide corner-ornament">
             <Picture
               name="hero-table-spread"
-              alt="A table spread at Osthir Test — a bowl of biryani, a bowl of creamy korma, spiced tea and mango lassi on brass trays with emerald linen."
+              alt="A table spread at Osthir Test, a bowl of biryani, a bowl of creamy korma, spiced tea and mango lassi on brass trays with emerald linen."
               sizes="(min-width: 1024px) 55vw, 100vw"
             />
           </div>
@@ -124,17 +129,17 @@ const craftPreview = craftChapters.slice(0, 3);
           <h2 class="display-1" style="margin-top: var(--space-4)">Made for the Middle<br /><span class="serif-i gold">of the Table</span></h2>
           <p class="lede" style="margin-top: var(--space-4)">
             Bowls built for passing, teas for lingering. Everything arrives steaming,
-            generous, and meant to be shared — or not. We won't judge.
+            generous, and meant to be shared, or not. We won't judge.
           </p>
           <div class="hero__cta" style="margin-top: var(--space-6)">
             <a class="btn btn--gold" href={order.href} {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
               {order.label} <span class="btn__arrow" aria-hidden="true">→</span>
             </a>
-            <a class="btn btn--ghost" href="/locations/">Plan a Visit</a>
+            <a class="btn btn--ghost" href={href('/locations/')}>Plan a Visit</a>
           </div>
           {!order.connected && (
             <p style="font-size: var(--fs-small); color: var(--text-faint); margin-top: var(--space-4)">
-              Online ordering is not connected yet — browse the menu and get in touch.
+              Online ordering is not connected yet, browse the menu and get in touch.
             </p>
           )}
         </div>
@@ -154,7 +159,7 @@ const craftPreview = craftChapters.slice(0, 3);
         {featuredDrinks.map((item, i) => <FoodCard item={item} revealDelay={i * 120} />)}
       </div>
       <p style="margin-top: var(--space-6)" data-reveal>
-        <a class="link-quiet" href="/drinks/">All drinks <span aria-hidden="true">→</span></a>
+        <a class="link-quiet" href={href('/drinks/')}>All drinks <span aria-hidden="true">→</span></a>
       </p>
     </div>
   </section>
@@ -167,11 +172,11 @@ const craftPreview = craftChapters.slice(0, 3);
         Simple dishes are not<br /><span class="serif-i gold">simple to make well</span>
       </h2>
       <p class="lede" data-reveal style="--reveal-delay:200ms; margin-inline: auto;">
-        {site.name} began with a small conviction: the humblest plate — rice, spice, a pot, a flame —
+        {site.name} began with a small conviction: the humblest plate (rice, spice, a pot, a flame)
         holds the most magic when every small step is done properly.
       </p>
       <p data-reveal style="--reveal-delay:300ms">
-        <a class="link-quiet" href="/our-story/">Read our story <span aria-hidden="true">→</span></a>
+        <a class="link-quiet" href={href('/our-story/')}>Read our story <span aria-hidden="true">→</span></a>
       </p>
     </div>
   </section>
@@ -182,8 +187,8 @@ const craftPreview = craftChapters.slice(0, 3);
       <p class="kicker kicker--bare" data-reveal>Hungry yet?</p>
       <h2 class="display-1" data-reveal style="--reveal-delay:100ms">Come and taste <span class="serif-i gold">the steam</span></h2>
       <div class="hero__cta" style="justify-content:center; --reveal-delay:200ms" data-reveal>
-        <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
-        <a class="btn btn--ghost" href="/contact/">Get in Touch</a>
+        <a class="btn btn--gold" href={href('/menu/')}>Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--ghost" href={href('/contact/')}>Get in Touch</a>
       </div>
     </div>
   </section>

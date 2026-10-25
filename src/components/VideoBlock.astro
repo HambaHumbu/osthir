@@ -36,7 +36,7 @@ const v = videoFor(name);
     const toggle = block.querySelector('.video-block__toggle');
     if (!video) return;
 
-    if (reducedMotion) return; // poster only — never load the video
+    if (reducedMotion) return; // poster only, never load the video
 
     const attach = () => {
       if (video.dataset.src && !video.src) {

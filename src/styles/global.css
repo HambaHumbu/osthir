@@ -1,8 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════════════
-   OSTHIR TEST — DESIGN SYSTEM
+   OSTHIR TEST: DESIGN SYSTEM
    Emerald & gold, editorial, cinematic. All tokens live here.
    ═══════════════════════════════════════════════════════════════════════════ */
-@import './fonts.css';
+/* @font-face rules live in src/layouts/BaseLayout.astro (inline, base-aware). */
 
 :root {
   /* Palette */
@@ -100,7 +100,9 @@ body {
     radial-gradient(900px 600px at -10% 20%, rgba(6, 76, 57, 0.35), transparent 55%),
     var(--bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  text-wrap: pretty;
   overflow-x: clip;
 }
 
@@ -221,7 +223,7 @@ h1, h2, h3, h4 {
 .section--light h1, .section--light h2, .section--light h3 { color: var(--ink); }
 .section--light p { color: var(--text-dark-soft); }
 
-/* Gold leaf-vein texture (recreated in CSS — replaces watermarked reference art) */
+/* Gold leaf-vein texture (recreated in CSS, replaces watermarked reference art) */
 .texture-leaf { position: relative; isolation: isolate; }
 .texture-leaf::before {
   content: '';

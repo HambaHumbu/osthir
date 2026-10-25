@@ -1,6 +1,7 @@
 ---
 import site from '../config/site.js';
 import { logo } from '../lib/media.js';
+import { href } from '../lib/url.js';
 
 const year = new Date().getFullYear();
 const { contact, location, social } = site;
@@ -12,9 +13,9 @@ const socials = Object.entries(social).filter(([, url]) => url);
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a href="/" class="brand" aria-label={`${site.name} — home`}>
+        <a href={href('/')} class="brand" aria-label={`${site.name}, home`}>
           <span class="brand__mark" style={`background:${logo.background}`}>
-            <img src="/media/img/logo-256.webp" width="44" height="44" alt="" loading="lazy" />
+            <img src={href('/media/img/logo-256.webp')} width="44" height="44" alt="" loading="lazy" />
           </span>
           <span class="brand__word">
             {site.name}
@@ -27,11 +28,11 @@ const socials = Object.entries(social).filter(([, url]) => url);
       <div class="footer__col">
         <h2>Explore</h2>
         <ul>
-          <li><a href="/menu/">Menu</a></li>
-          <li><a href="/drinks/">Drinks</a></li>
-          <li><a href="/the-craft/">The Craft</a></li>
-          <li><a href="/our-story/">Our Story</a></li>
-          <li><a href="/catering/">Catering</a></li>
+          <li><a href={href('/menu/')}>Menu</a></li>
+          <li><a href={href('/drinks/')}>Drinks</a></li>
+          <li><a href={href('/the-craft/')}>The Craft</a></li>
+          <li><a href={href('/our-story/')}>Our Story</a></li>
+          <li><a href={href('/catering/')}>Catering</a></li>
         </ul>
       </div>
 
@@ -43,7 +44,7 @@ const socials = Object.entries(social).filter(([, url]) => url);
             {location.city && <span>{location.city}{location.postcode ? ` ${location.postcode}` : ''}<br /></span>}
           </address>
         ) : (
-          <p>Our address is being confirmed. <a href="/locations/">See the Visit page</a> for the latest details.</p>
+          <p>Our address is being confirmed. <a href={href('/locations/')}>See the Visit page</a> for the latest details.</p>
         )}
         {location.directionsUrl && (
           <ul><li><a href={location.directionsUrl} target="_blank" rel="noopener noreferrer">Get directions ↗</a></li></ul>
@@ -58,7 +59,7 @@ const socials = Object.entries(social).filter(([, url]) => url);
             {contact.phone && <li><a href={`tel:${contact.phoneHref}`}>{contact.phone}</a></li>}
           </ul>
         ) : (
-          <p>Contact details are being confirmed — <a href="/contact/">the contact page</a> has the latest.</p>
+          <p>Contact details are being confirmed, <a href={href('/contact/')}>the contact page</a> has the latest.</p>
         )}
         {socials.length > 0 && (
           <ul>
@@ -73,9 +74,9 @@ const socials = Object.entries(social).filter(([, url]) => url);
     <div class="footer__legal">
       <span>© {year} {site.name}. All rights reserved.</span>
       <nav aria-label="Legal">
-        <a href="/privacy/">Privacy</a>
-        <a href="/accessibility/">Accessibility</a>
-        <a href="/sitemap-index.xml">Sitemap</a>
+        <a href={href('/privacy/')}>Privacy</a>
+        <a href={href('/accessibility/')}>Accessibility</a>
+        <a href={href('/sitemap-index.xml')}>Sitemap</a>
       </nav>
     </div>
   </div>

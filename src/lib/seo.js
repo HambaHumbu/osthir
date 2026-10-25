@@ -1,11 +1,14 @@
 // SEO + structured-data helpers. JSON-LD is only ever built from verified
-// configuration — unknown fields (address, phone, hours, prices, ratings)
+// configuration, unknown fields (address, phone, hours, prices, ratings)
 // are omitted, never fabricated.
 import site from '../config/site.js';
 import { menuItems, categories, getCategory } from '../data/menu.js';
+import { href } from './url.js';
 
+// Canonicals are absolute: site.url (origin, no trailing slash) plus the
+// base-aware path, e.g. https://tyfsadik.github.io + /osthir/menu/.
 export function canonical(pathname) {
-  return new URL(pathname, site.url).toString();
+  return site.url + href(pathname);
 }
 
 export function restaurantJsonLd() {
@@ -15,13 +18,16 @@ export function restaurantJsonLd() {
     name: site.name,
     description: site.description,
     url: site.url,
-    servesCuisine: ['Biryani', 'South Asian', 'Desi'],
-    logo: new URL('/logo-512.png', site.url).toString(),
-    image: new URL(site.seo.defaultOgImage, site.url).toString(),
+    servesCuisine: ['Bengali', 'Bangladeshi', 'Biryani', 'South Asian', 'Desi'],
+    keywords: 'Bengali restaurant, Bangladeshi food, biryani, desi curry, korma, lassi, Canada',
+    logo: site.url + href('/logo-512.png'),
+    image: site.url + href(site.seo.defaultOgImage),
   };
   const { contact, location } = site;
   if (contact.email) data.email = contact.email;
   if (contact.phoneHref) data.telephone = contact.phoneHref;
+  // Full postal address once a street is known; otherwise at least declare the
+  // country so the listing is geographically anchored without fabricating a street.
   if (location.addressLines) {
     data.address = {
       '@type': 'PostalAddress',
@@ -30,6 +36,11 @@ export function restaurantJsonLd() {
       ...(location.postcode && { postalCode: location.postcode }),
       ...(location.country && { addressCountry: location.country }),
     };
+  } else if (location.country) {
+    data.address = { '@type': 'PostalAddress', addressCountry: location.country };
+  }
+  if (location.country) {
+    data.areaServed = { '@type': 'Country', name: location.country };
   }
   if (location.geo) data.geo = { '@type': 'GeoCoordinates', ...location.geo };
   if (location.openingHours) {

@@ -5,6 +5,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Faq from '../components/Faq.astro';
 import site from '../config/site.js';
 import { breadcrumbJsonLd, faqJsonLd } from '../lib/seo.js';
+import { href } from '../lib/url.js';
 
 const { contact } = site;
 const order = site.orderingUrl;
@@ -13,16 +14,16 @@ const faqs = [
   {
     question: 'How do I order from Osthir Test?',
     answer: order
-      ? 'Use the Order Online button anywhere on this site — it links to our ordering provider.'
+      ? 'Use the Order Online button anywhere on this site, it links to our ordering provider.'
       : 'Online ordering is not connected yet. Browse the menu, and use this page or the Visit page to reach us directly.',
   },
   {
     question: 'What kind of food does Osthir Test serve?',
-    answer: 'Dum-cooked beef and lamb biryani, desi classics (chicken, beef and duck curries), chicken korma, and traditional drinks — lemon, mint and saffron teas, lassis and pistachio badam milk.',
+    answer: 'Dum-cooked beef and lamb biryani, desi classics (chicken, beef and duck curries), chicken korma, and traditional drinks, lemon, mint and saffron teas, lassis and pistachio badam milk.',
   },
   {
     question: 'Do you cater events?',
-    answer: 'Yes — biryani and desi spreads travel well. Use the catering page to tell us about your event and we will plan the menu with you.',
+    answer: 'Yes, biryani and desi spreads travel well. Use the catering page to tell us about your event and we will plan the menu with you.',
   },
 ];
 
@@ -33,7 +34,7 @@ const crumbs = [
 ---
 <BaseLayout
   title="Contact"
-  description="Contact Osthir Test — questions, feedback, catering and ordering enquiries."
+  description="Contact Osthir Test, questions, feedback, catering and ordering enquiries."
   jsonld={[breadcrumbJsonLd(crumbs), faqJsonLd(faqs)]}
 >
   <header class="page-hero texture-leaf">
@@ -42,7 +43,7 @@ const crumbs = [
       <p class="kicker" data-reveal>Contact</p>
       <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Say <span class="serif-i gold">Hello</span></h1>
       <p class="lede" data-reveal style="--reveal-delay:200ms">
-        Questions, feedback, catering dreams — we read everything.
+        Questions, feedback, catering dreams, we read everything.
       </p>
     </div>
   </header>
@@ -63,7 +64,7 @@ const crumbs = [
             <p style="color:var(--text-soft);font-size:var(--fs-small)">Phone is being connected and will appear here.</p>
           )}
           <p style="color:var(--text-soft);font-size:var(--fs-small)">
-            Planning a visit? The <a class="link-quiet" href="/locations/">Visit page</a> carries
+            Planning a visit? The <a class="link-quiet" href={href('/locations/')}>Visit page</a> carries
             the address and opening hours once confirmed.
           </p>
         </div>

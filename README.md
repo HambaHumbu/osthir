@@ -1,10 +1,10 @@
-# Osthir Test — Restaurant Website
+# Osthir Test, Restaurant Website
 
-A complete, static, multi-page restaurant website for **Osthir Test** — premium
+A complete, static, multi-page restaurant website for **Osthir Test**, premium
 fast-casual biryani, desi comfort food and traditional drinks, in an
 emerald-and-gold editorial design.
 
-Built with **Astro 5** (static output) and **plain JavaScript** — no TypeScript,
+Built with **Astro 5** (static output) and **plain JavaScript**, no TypeScript,
 no React, no runtime framework lock-in, no database, no external services
 required to display the site.
 
@@ -37,7 +37,7 @@ npm run dev -- --host
 ```
 
 then open the `Network:` URL Astro prints. **Caution:** the dev server is a
-development tool — bind it only on a trusted local network, never expose it
+development tool, bind it only on a trusted local network, never expose it
 to the public internet.
 
 ## 4. Production build
@@ -56,7 +56,7 @@ npm run preview    # serves dist/ at http://localhost:4321
 
 - **Business info** (name, tagline, contact, address, hours, social links,
   currency, ordering URL, form endpoint): edit **`src/config/site.js`**.
-  Every field is commented. Fields left `null` are simply not shown — the site
+  Every field is commented. Fields left `null` are simply not shown, the site
   never displays fabricated contact details, hours, or prices.
 - **Menu items, categories, descriptions, prices**: edit **`src/data/menu.js`**.
   Each dish has `slug`, `name`, `category`, `image`, `alt`, `short`,
@@ -146,15 +146,15 @@ runtime is required.
 
 All surfaced by `npm run check` as warnings:
 
-- **SITE_URL** — the real public domain (§9)
-- **orderingUrl** — the real ordering provider link (§8)
-- **contact.email / phone** — published nowhere until configured
-- **location.\*** — address, hours, directions, map embed; the Locations page
+- **SITE_URL**, the real public domain (§9)
+- **orderingUrl**, the real ordering provider link (§8)
+- **contact.email / phone**, published nowhere until configured
+- **location.\***, address, hours, directions, map embed; the Locations page
   shows an honest "being confirmed" state until then
-- **forms.formEndpoint** — where enquiries are delivered (§10)
-- **Prices, allergens, dietary certifications** — intentionally absent until
+- **forms.formEndpoint**, where enquiries are delivered (§10)
+- **Prices, allergens, dietary certifications**, intentionally absent until
   you add verified values in `src/data/menu.js`
-- **Social profile URLs** — rendered only when real URLs are supplied
+- **Social profile URLs**, rendered only when real URLs are supplied
 
 ## 13. Re-running asset optimization and tests
 
@@ -162,7 +162,7 @@ All surfaced by `npm run check` as warnings:
 npm run assets          # re-generate all image + video derivatives
 npm run check           # source-level data/config verification
 npm run lint            # syntax-check scripts + validate JSON
-npm test                # crawl dist/ — links, assets, meta, JSON-LD
+npm test                # crawl dist/, links, assets, meta, JSON-LD
 npm run verify          # build + post-build verification in one step
 ```
 
@@ -191,7 +191,7 @@ tests/           source check, build crawler, lint
 
 ## Notes
 
-- All fonts, images and videos are served locally — no runtime CDN, analytics,
+- All fonts, images and videos are served locally, no runtime CDN, analytics,
   or third-party calls.
 - `prefers-reduced-motion` is respected throughout: decorative videos are
   replaced by poster stills and scroll animations are disabled.

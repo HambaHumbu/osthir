@@ -1,10 +1,12 @@
-// llms.txt — a supplementary plain-text guide to this site for language-model
+// llms.txt, a supplementary plain-text guide to this site for language-model
 // crawlers. This is a courtesy index, not a substitute for crawlable HTML and
 // valid structured data (both of which this site provides).
 import site from '../config/site.js';
 import { menuItems, categories } from '../data/menu.js';
+import { href } from '../lib/url.js';
 
 export function GET() {
+  const abs = (p) => site.url + href(p);
   const lines = [
     `# ${site.name}`,
     '',
@@ -12,14 +14,14 @@ export function GET() {
     '',
     '## Pages',
     '',
-    `- Home: ${site.url}/`,
-    `- Menu: ${site.url}/menu/`,
-    `- Drinks: ${site.url}/drinks/`,
-    `- The Craft (cooking process): ${site.url}/the-craft/`,
-    `- Our Story: ${site.url}/our-story/`,
-    `- Visit / locations: ${site.url}/locations/`,
-    `- Catering: ${site.url}/catering/`,
-    `- Contact: ${site.url}/contact/`,
+    `- Home: ${abs('/')}`,
+    `- Menu: ${abs('/menu/')}`,
+    `- Drinks: ${abs('/drinks/')}`,
+    `- The Craft (cooking process): ${abs('/the-craft/')}`,
+    `- Our Story: ${abs('/our-story/')}`,
+    `- Visit / locations: ${abs('/locations/')}`,
+    `- Catering: ${abs('/catering/')}`,
+    `- Contact: ${abs('/contact/')}`,
     '',
     '## Menu',
     '',
@@ -27,7 +29,7 @@ export function GET() {
   for (const cat of categories) {
     lines.push(`### ${cat.name}`);
     for (const item of menuItems.filter((i) => i.category === cat.id)) {
-      lines.push(`- ${item.name}: ${item.short} (${site.url}/menu/${item.slug}/)`);
+      lines.push(`- ${item.name}: ${item.short} (${abs(`/menu/${item.slug}/`)})`);
     }
     lines.push('');
   }

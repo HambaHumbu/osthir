@@ -5,6 +5,7 @@ import VideoBlock from '../components/VideoBlock.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { craftChapters } from '../data/craft.js';
 import { breadcrumbJsonLd } from '../lib/seo.js';
+import { href } from '../lib/url.js';
 
 const crumbs = [
   { name: 'Home', path: '/' },
@@ -13,7 +14,7 @@ const crumbs = [
 ---
 <BaseLayout
   title="The Craft"
-  description="The craft behind Osthir Test — hand-ground whole spices, bronze-fried onions, saffron, ghee, the dough-sealed dum pot, and the slow pours that finish every dish."
+  description="The craft behind Osthir Test, hand-ground whole spices, bronze-fried onions, saffron, ghee, the dough-sealed dum pot, and the slow pours that finish every dish."
   jsonld={[breadcrumbJsonLd(crumbs)]}
 >
   <header class="page-hero texture-leaf">
@@ -23,7 +24,7 @@ const crumbs = [
         <p class="kicker" data-reveal>The Craft</p>
         <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Eight Rituals<br /><span class="serif-i gold">Before the Lid Lifts</span></h1>
         <p class="lede" data-reveal style="--reveal-delay:200ms">
-          The traditions behind the food we celebrate, told in chapters — from the
+          The traditions behind the food we celebrate, told in chapters, from the
           mortar to the dum seal to the final pour.
         </p>
       </div>
@@ -75,8 +76,8 @@ const crumbs = [
         <p class="kicker kicker--bare" data-reveal>The proof</p>
         <h2 class="display-1" data-reveal style="--reveal-delay:100ms">Now taste <span class="serif-i gold">the result</span></h2>
         <div class="hero__cta" data-reveal style="--reveal-delay:200ms">
-          <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
-          <a class="btn btn--ghost" href="/our-story/">Our Story</a>
+          <a class="btn btn--gold" href={href('/menu/')}>Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href={href('/our-story/')}>Our Story</a>
         </div>
       </div>
     </div>

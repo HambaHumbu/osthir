@@ -1,18 +1,18 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import { SITE_URL, SITE_URL_IS_PLACEHOLDER } from './src/config/site-url.mjs';
+import { SITE_URL } from './src/config/site-url.mjs';
 
-if (SITE_URL_IS_PLACEHOLDER) {
-  console.warn(
-    '\n[osthir] SITE_URL is not configured — canonical URLs, sitemap.xml and robots.txt ' +
-      'will use the placeholder "' + SITE_URL + '".\n' +
-      '         Set SITE_URL in .env or src/config/site-url.mjs before public launch.\n',
-  );
+// Deploy under a subpath (e.g. GitHub Pages project site) with BASE_PATH=/osthir.
+const BASE_PATH = process.env.BASE_PATH || '/';
+
+if (BASE_PATH !== '/') {
+  console.warn(`\n[osthir] BASE_PATH is "${BASE_PATH}", all internal URLs are prefixed with it.\n`);
 }
 
 export default defineConfig({
   site: SITE_URL,
+  base: BASE_PATH,
   trailingSlash: 'always',
   integrations: [sitemap()],
   build: { inlineStylesheets: 'auto' },

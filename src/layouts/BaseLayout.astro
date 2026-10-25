@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import site from '../config/site.js';
 import { canonical, restaurantJsonLd, websiteJsonLd } from '../lib/seo.js';
+import { href, routePath } from '../lib/url.js';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -13,10 +14,30 @@ const {
   noindex = false,
 } = Astro.props;
 
-const pageTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
-const canonicalUrl = canonical(Astro.url.pathname);
-const ogImage = new URL(image, site.url).toString();
+const pageTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const canonicalUrl = canonical(routePath(Astro.url.pathname));
+const ogImage = site.url + href(image);
+const ogLocale = site.locale.replace('-', '_');
+const ogImageAlt = `${site.name}: Bengali biryani, desi curries and traditional drinks on brass trays`;
 const schemas = [restaurantJsonLd(), websiteJsonLd(), ...jsonld];
+
+// Self-hosted fonts live in public/fonts/. The @font-face rules are inline
+// here (not in a bundled stylesheet) so url() can be prefixed with the
+// configured base path (Vite does not rewrite public-dir paths in CSS).
+const fontFaces = `@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('${href('/fonts/fraunces-var.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url('${href('/fonts/manrope-var.woff2')}') format('woff2');
+}`;
 ---
 <!doctype html>
 <html lang={site.locale}>
@@ -34,23 +55,29 @@ const schemas = [restaurantJsonLd(), websiteJsonLd(), ...jsonld];
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/png" sizes="32x32" href={href('/favicon-32.png')} />
+    <link rel="apple-touch-icon" href={href('/apple-touch-icon.png')} />
+    <link rel="manifest" href={href('/site.webmanifest')} />
 
-    <link rel="preload" href="/fonts/fraunces-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/manrope-var.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={href('/fonts/fraunces-var.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={href('/fonts/manrope-var.woff2')} as="font" type="font/woff2" crossorigin />
+    <style is:inline set:html={fontFaces}></style>
 
     {schemas.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
@@ -71,7 +98,7 @@ const schemas = [restaurantJsonLd(), websiteJsonLd(), ...jsonld];
     </button>
 
     <script>
-      // Scroll reveals — IntersectionObserver, disabled under reduced motion.
+      // Scroll reveals via IntersectionObserver, disabled under reduced motion.
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const revealEls = document.querySelectorAll('[data-reveal], .clip-reveal');
       if (reduced) {

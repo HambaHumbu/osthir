@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
  * Source-level checks (npm run check):
- *   1. Menu data integrity — unique slugs, valid categories, every image key
+ *   1. Menu data integrity, unique slugs, valid categories, every image key
  *      exists in the generated media manifest, alt text present.
  *   2. Every menu item has a matching generated derivative on disk.
  *   3. Expected pages, fonts and the logo derivative exist.
- *   4. Config sanity — warns (does not fail) when SITE_URL / contact / ordering
+ *   4. Config sanity, warns (does not fail) when SITE_URL / contact / ordering
  *      are still unconfigured, so the check passes pre-launch but tells the truth.
  */
 import { existsSync, readFileSync } from 'node:fs';
@@ -25,7 +25,7 @@ function ok(msg) {
   console.log(`  ✓ ${msg}`);
 }
 
-console.log('Source checks\n— data integrity');
+console.log('Source checks\n- data integrity');
 const manifest = JSON.parse(readFileSync(path.join(ROOT, 'src/data/media-manifest.json'), 'utf8'));
 
 const slugs = new Set();
@@ -44,7 +44,7 @@ for (const item of menuItems) {
 }
 ok(`${menuItems.length} menu items verified against media manifest`);
 
-console.log('— required files');
+console.log('- required files');
 const required = [
   'src/pages/index.astro',
   'src/pages/menu/index.astro',
@@ -70,12 +70,12 @@ for (const f of required) {
 }
 ok(`${required.length} required files present`);
 
-console.log('— configuration');
-if (site.url.includes('example.com')) warnings.push('SITE_URL is still the placeholder — set it before public launch (README §9).');
-if (!site.orderingUrl) warnings.push('orderingUrl not set — order buttons route to /menu/ (README §8).');
+console.log('- configuration');
+if (site.url.includes('example.com')) warnings.push('SITE_URL is still the placeholder, set it before public launch (README §9).');
+if (!site.orderingUrl) warnings.push('orderingUrl not set, order buttons route to /menu/ (README §8).');
 if (!site.contact.email && !site.contact.phone) warnings.push('No contact email/phone configured (README §6).');
-if (!site.location.addressLines) warnings.push('No address/hours configured — Locations page shows honest "being confirmed" state (README §6).');
-if (!site.forms.formEndpoint) warnings.push('forms.formEndpoint not set — forms fall back to mailto/info states (README §10).');
+if (!site.location.addressLines) warnings.push('No address/hours configured, Locations page shows honest "being confirmed" state (README §6).');
+if (!site.forms.formEndpoint) warnings.push('forms.formEndpoint not set, forms fall back to mailto/info states (README §10).');
 warnings.forEach((w) => console.warn(`  ⚠ ${w}`));
 
 if (failures) {

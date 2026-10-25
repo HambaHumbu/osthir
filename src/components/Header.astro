@@ -2,6 +2,7 @@
 import site from '../config/site.js';
 import { orderAction } from '../lib/order.js';
 import { logo } from '../lib/media.js';
+import { href } from '../lib/url.js';
 
 const order = orderAction();
 const pathname = Astro.url.pathname;
@@ -15,14 +16,15 @@ const links = [
   { href: '/contact/', label: 'Contact' },
 ];
 
-const isActive = (href) =>
-  href === '/' ? pathname === '/' : pathname.startsWith(href);
+// Astro.url.pathname includes the base prefix, so compare against href().
+const isActive = (path) =>
+  path === '/' ? pathname === href('/') : pathname.startsWith(href(path));
 ---
 <header class="site-header" id="site-header">
   <div class="container container--wide nav">
-    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+    <a href={href('/')} class="brand" aria-label={`${site.name}, home`}>
       <span class="brand__mark" style={`background:${logo.background}`}>
-        <img src="/media/img/logo-256.webp" width="44" height="44" alt="" fetchpriority="high" />
+        <img src={href('/media/img/logo-256.webp')} width="44" height="44" alt="" fetchpriority="high" />
       </span>
       <span class="brand__word">
         {site.name}
@@ -36,7 +38,7 @@ const isActive = (href) =>
           <li>
             <a
               class="nav__link"
-              href={link.href}
+              href={href(link.href)}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >{link.label}</a>
           </li>
@@ -74,7 +76,7 @@ const isActive = (href) =>
       {links.map((link, i) => (
         <li>
           <a
-            href={link.href}
+            href={href(link.href)}
             style={`transition-delay:${60 + i * 45}ms`}
             aria-current={isActive(link.href) ? 'page' : undefined}
           >

@@ -7,6 +7,7 @@ import Picture from '../components/Picture.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { itemsByCategory } from '../data/menu.js';
 import { breadcrumbJsonLd } from '../lib/seo.js';
+import { href } from '../lib/url.js';
 
 const drinks = itemsByCategory('drinks');
 const teas = drinks.filter((d) => ['lemon-tea', 'mint-tea', 'saffron-tea'].includes(d.slug));
@@ -19,7 +20,7 @@ const crumbs = [
 ---
 <BaseLayout
   title="Drinks"
-  description="Traditional drinks at Osthir Test — lemon, mint and saffron teas, regular and mango lassi, and pistachio badam milk, poured with a little theatre."
+  description="Traditional drinks at Osthir Test, lemon, mint and saffron teas, regular and mango lassi, and pistachio badam milk, poured with a little theatre."
   jsonld={[breadcrumbJsonLd(crumbs)]}
 >
   <header class="page-hero texture-leaf">
@@ -57,7 +58,7 @@ const crumbs = [
         <h2 class="display-1" style="margin-top: var(--space-4)">Tea with <span class="serif-i">a Little Height</span></h2>
         <p class="lede" style="margin-top: var(--space-4)">
           Pulled from jug to glass, tea aerates, froths and softens. It is a small theatre
-          that you can taste — and the reason our chai arrives with a crown of foam.
+          that you can taste, and the reason our chai arrives with a crown of foam.
         </p>
       </div>
       <div class="split__media" data-reveal="right">
@@ -71,7 +72,7 @@ const crumbs = [
   <!-- Lassis & milk -->
   <section class="section texture-leaf grain">
     <div class="container">
-      <SectionHeading kicker="Chilled" title="Lassis & Badam Milk" lede="Thick, cold and crowned with nuts — the classic cool-down beside anything spicy." />
+      <SectionHeading kicker="Chilled" title="Lassis & Badam Milk" lede="Thick, cold and crowned with nuts, the classic cool-down beside anything spicy." />
       <div class="grid grid-3" style="margin-top: var(--space-7)">
         {lassis.map((item, i) => <FoodCard item={item} revealDelay={i * 120} />)}
       </div>
@@ -86,7 +87,7 @@ const crumbs = [
     <div class="container cta-band">
       <h2 class="title-1" data-reveal>Something to eat with that?</h2>
       <div class="hero__cta" data-reveal style="--reveal-delay:120ms">
-        <a class="btn btn--gold" href="/menu/">Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
+        <a class="btn btn--gold" href={href('/menu/')}>Explore the Menu <span class="btn__arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>

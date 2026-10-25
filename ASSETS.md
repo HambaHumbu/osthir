@@ -1,4 +1,4 @@
-# Asset Manifest — Osthir Test
+# Asset Manifest, Osthir Test
 
 Every original asset was visually inspected (not just filename-matched) during
 the build audit on 2026-10-25. Originals in the project root are **never
@@ -39,8 +39,8 @@ modified**; all derivatives live under `public/media/`.
 
 | Original | Duration | Verified content | Used for | Derivative |
 |---|---|---|---|---|
-| `osthir-v1-hero-loop.mp4` | 10 s | Ornate brass handi, lid lifts, steam reveals saffron biryani, slow push-in | **Homepage hero** (chosen after frame review — moodiest, most emerald) | `hero-loop.mp4` (CRF 26, ~2 MB) + posters |
-| `osthir-v2-brand-film.mp4` | 8 s (has mono AAC audio) | Spice/pot/tea/plating montage; **final ~1.4 s shows a non-brand calligraphy card** | Our Story hero — **trimmed to 6.6 s**, audio stripped | `brand-film.mp4` + posters |
+| `osthir-v1-hero-loop.mp4` | 10 s | Ornate brass handi, lid lifts, steam reveals saffron biryani, slow push-in | **Homepage hero** (chosen after frame review, moodiest, most emerald) | `hero-loop.mp4` (CRF 26, ~2 MB) + posters |
+| `osthir-v2-brand-film.mp4` | 8 s (has mono AAC audio) | Spice/pot/tea/plating montage; **final ~1.4 s shows a non-brand calligraphy card** | Our Story hero, **trimmed to 6.6 s**, audio stripped | `brand-film.mp4` + posters |
 | `osthir-v3-biryani-pot-reveal.mp4` | 10 s | Golden handi lid lifts over chicken biryani, star anise, heavy steam | The Craft page hero | `biryani-pot-reveal.mp4` + posters |
 | `osthir-v4-curry-simmer.mp4` | 10 s | Chicken curry simmering in copper pot, ladle stir | The Craft mid-page | `curry-simmer.mp4` + posters |
 | `osthir-v5-malai-tea-pour.mp4` | 10 s | Ornate brass jug pours steaming milky tea into a glass | Drinks page hero | `malai-tea-pour.mp4` + posters |
@@ -49,13 +49,13 @@ modified**; all derivatives live under `public/media/`.
 All video derivatives: audio stripped, `+faststart`, lazy-loaded below the
 fold, poster-first, and replaced by the poster under `prefers-reduced-motion`.
 
-## Design references — audit outcome
+## Design references, audit outcome
 
 | File | Verdict |
 |---|---|
-| `design background idea.png` (emerald/gold leaf veins) | **Not used directly** — recreated as a pure-CSS/SVG texture (`.texture-leaf` in `src/styles/global.css`) to guarantee no watermark/licensing artifacts |
-| `design background and color idea.png` (kintsugi marble) | **Not used directly** — faint circular stock-preview artifacts visible; palette/mood adopted, texture recreated in CSS |
-| `design color idea and background idea .png` | **Not used** — contains embedded "LUXURY BACKGROUND" sample text; used as palette/mood reference only |
+| `design background idea.png` (emerald/gold leaf veins) | **Not used directly**, recreated as a pure-CSS/SVG texture (`.texture-leaf` in `src/styles/global.css`) to guarantee no watermark/licensing artifacts |
+| `design background and color idea.png` (kintsugi marble) | **Not used directly**, faint circular stock-preview artifacts visible; palette/mood adopted, texture recreated in CSS |
+| `design color idea and background idea .png` | **Not used**, contains embedded "LUXURY BACKGROUND" sample text; used as palette/mood reference only |
 
 ## Optimization status
 
