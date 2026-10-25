@@ -34,7 +34,7 @@
 
   /* Typography */
   --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-sans: 'Manrope', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-sans: 'Rany', 'Segoe UI', system-ui, -apple-system, sans-serif;
   --fs-hero: clamp(2.6rem, 6.2vw, 5rem);
   --fs-display: clamp(2rem, 4.4vw, 3.4rem);
   --fs-title: clamp(1.5rem, 3vw, 2.2rem);

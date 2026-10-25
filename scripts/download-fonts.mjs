@@ -1,15 +1,18 @@
 #!/usr/bin/env node
 /**
- * Downloads the self-hosted webfonts (Fraunces variable + Manrope variable,
- * SIL Open Font License) from Google Fonts into public/fonts/. Run once (or
- * to refresh):
+ * Downloads the Fraunces variable display font (SIL Open Font License) from
+ * Google Fonts into public/fonts/. Run once (or to refresh):
  *
  *   node scripts/download-fonts.mjs
  *
- * The @font-face rules for these files are NOT generated here, they live as
- * an inline, base-path-aware <style> block in src/layouts/BaseLayout.astro
- * (bundled CSS cannot prefix public-dir url()s with the configured base).
- * If font files are ever renamed, update that block to match.
+ * The body/UI font is Rany (rany-regular/medium/bold.woff2). Rany is not on
+ * Google Fonts, so it is vendored: the OTF source was converted to WOFF2 with
+ * fonttools and committed directly. It is not fetched by this script.
+ *
+ * The @font-face rules for all of these files are NOT generated here, they
+ * live as an inline, base-path-aware <style> block in
+ * src/layouts/BaseLayout.astro (bundled CSS cannot prefix public-dir url()s
+ * with the configured base). If font files are ever renamed, update that block.
  *
  * The built site never contacts a third-party font server at runtime.
  */
@@ -22,11 +25,6 @@ const FAMILIES = [
     file: 'fraunces-var.woff2',
     family: 'Fraunces',
     // keep only the latin variable file
-  },
-  {
-    css: 'https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap',
-    file: 'manrope-var.woff2',
-    family: 'Manrope',
   },
 ];
 

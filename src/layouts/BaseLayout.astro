@@ -32,11 +32,25 @@ const fontFaces = `@font-face {
   src: url('${href('/fonts/fraunces-var.woff2')}') format('woff2');
 }
 @font-face {
-  font-family: 'Manrope';
+  font-family: 'Rany';
   font-style: normal;
-  font-weight: 200 800;
+  font-weight: 400;
   font-display: swap;
-  src: url('${href('/fonts/manrope-var.woff2')}') format('woff2');
+  src: url('${href('/fonts/rany-regular.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'Rany';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('${href('/fonts/rany-medium.woff2')}') format('woff2');
+}
+@font-face {
+  font-family: 'Rany';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('${href('/fonts/rany-bold.woff2')}') format('woff2');
 }`;
 ---
 <!doctype html>
@@ -76,7 +90,7 @@ const fontFaces = `@font-face {
     <link rel="manifest" href={href('/site.webmanifest')} />
 
     <link rel="preload" href={href('/fonts/fraunces-var.woff2')} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={href('/fonts/manrope-var.woff2')} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={href('/fonts/rany-regular.woff2')} as="font" type="font/woff2" crossorigin />
     <style is:inline set:html={fontFaces}></style>
 
     {schemas.map((schema) => (
