@@ -1,9 +1,9 @@
 {
-  "name": "osthir-test-website",
+  "name": "osthir-flavours-website",
   "type": "module",
   "version": "1.0.0",
   "private": true,
-  "description": "Osthir Test — premium restaurant website (static, Astro + TypeScript)",
+  "description": "Osthir Flavours, premium restaurant website (static, Astro + TypeScript)",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",

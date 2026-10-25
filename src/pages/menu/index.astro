@@ -13,18 +13,19 @@ const crumbs = [
 ---
 <BaseLayout
   title="Menu"
-  description="The Osthir Test menu — dum-cooked beef and lamb biryani, desi classics like chicken, beef and duck curries, chicken korma, and traditional teas and lassis."
+  description="The Osthir Flavours menu, dum-cooked beef and lamb biryani, desi classics like chicken, beef and duck curries, chicken korma, and traditional teas and lassis."
   jsonld={[menuJsonLd(), breadcrumbJsonLd(crumbs)]}
 >
   <header class="page-hero texture-leaf">
     <div class="container page-hero__inner">
       <Breadcrumbs items={crumbs} />
-      <p class="kicker" data-reveal>The Menu</p>
-      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Everything,<br /><span class="serif-i gold">Steaming</span></h1>
+      <p class="kicker" data-reveal>The menu</p>
+      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">The whole<br /><span class="serif-i gold">spread</span></h1>
       <p class="lede" data-reveal style="--reveal-delay:200ms">
-        {menuItems.length} dishes and drinks, photographed as they are served.
-        Search or filter by what you're craving.
+        {menuItems.length} dishes and drinks. The pictures are illustrative for now.
+        Ours will replace them on opening day. Search the menu, or filter by category.
       </p>
+      <p data-reveal style="--reveal-delay:260ms; font-size: var(--fs-micro); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-faint)">Illustrative images</p>
     </div>
   </header>
 

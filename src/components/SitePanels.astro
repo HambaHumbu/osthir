@@ -1,0 +1,192 @@
+---
+// The three global slide-in panels, built on native <dialog> (focus trap, Esc
+// to close, and return-focus are native). Triggers are any element with
+// data-open-panel="city | opening-list | order". Deep links: #city,
+// #opening-list, #order. Forms are wired UI only: there is no backend yet, so
+// they confirm honestly and collect nothing until one is connected.
+import site from '../config/site.js';
+import { regions } from '../data/places.js';
+const { contact } = site;
+const closeIcon = 'M4 4 16 16M16 4 4 16';
+---
+<!-- City finder -->
+<dialog id="city" class="panel" aria-labelledby="city-title">
+  <div class="panel__head">
+    <h2 class="panel__title" id="city-title">Where should we open next?</h2>
+    <button type="button" class="panel__close" data-close-panel aria-label="Close">
+      <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><path d={closeIcon} stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="panel__body">
+    <button type="button" class="btn btn--ghost" data-use-location>Use my location</button>
+    <p class="panel__note" data-geo-note hidden></p>
+    <div class="finder">
+      {regions.map((r) => (
+        <details class="finder__region">
+          <summary>{r.province}</summary>
+          <ul class="finder__cities">
+            {r.cities.map((c) => (
+              <li><button type="button" class="finder__city" data-city-pick={c}>{c}</button></li>
+            ))}
+          </ul>
+        </details>
+      ))}
+    </div>
+    <form class="panel__form" data-city-form hidden novalidate>
+      <p>Tell us you want Osthir in <b data-city-target>your city</b>.</p>
+      <label class="field">Email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" /></label>
+      <label class="consent"><input type="checkbox" name="consent" required /> <span>Send me news about Osthir. I can unsubscribe any time.</span></label>
+      <button class="btn btn--gold" type="submit">Tell us</button>
+      <p class="panel__ok" data-ok hidden role="status">Thanks. We will let you know when Osthir reaches your city.</p>
+    </form>
+  </div>
+</dialog>
+
+<!-- Opening list -->
+<dialog id="opening-list" class="panel" aria-labelledby="ol-title">
+  <div class="panel__head">
+    <h2 class="panel__title" id="ol-title">Join the opening list</h2>
+    <button type="button" class="panel__close" data-close-panel aria-label="Close">
+      <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><path d={closeIcon} stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="panel__body">
+    <p class="panel__lead">We are opening soon in Canada. Leave your email and you will hear first. No spam, no giveaways, just the date and where.</p>
+    <form class="panel__form" data-list-form novalidate>
+      <label class="field">Email<input type="email" name="email" required autocomplete="email" placeholder="you@example.com" /></label>
+      <label class="field">City<input type="text" name="city" data-city-field autocomplete="address-level2" placeholder="Toronto" /></label>
+      <label class="field">Name (optional)<input type="text" name="name" autocomplete="name" /></label>
+      <label class="consent"><input type="checkbox" name="consent" required /> <span>Send me news about Osthir. I can unsubscribe any time.</span></label>
+      <button class="btn btn--gold" type="submit">Join the list</button>
+      <p class="panel__ok" data-ok hidden role="status">Thanks. You are on the list. We will email you before we open.</p>
+    </form>
+  </div>
+</dialog>
+
+<!-- Order and reserve -->
+<dialog id="order" class="panel" aria-labelledby="order-title">
+  <div class="panel__head">
+    <h2 class="panel__title" id="order-title">Order and reserve</h2>
+    <button type="button" class="panel__close" data-close-panel aria-label="Close">
+      <svg viewBox="0 0 20 20" width="18" height="18" fill="none" aria-hidden="true"><path d={closeIcon} stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="panel__body">
+    <div class="tabs" role="tablist" aria-label="Order options">
+      <button class="tab" role="tab" aria-selected="true" data-tab="pickup">Pickup</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="delivery">Delivery</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="reserve">Reserve</button>
+    </div>
+    <div class="tabpanels">
+      <div role="tabpanel" data-tabpanel="pickup">
+        <p class="panel__lead">Pickup opens with the restaurant. Put your name down and you will be first to order.</p>
+        <button class="btn btn--gold" type="button" data-open-panel="opening-list">Join the opening list</button>
+      </div>
+      <div role="tabpanel" data-tabpanel="delivery" hidden>
+        <p class="panel__lead">Delivery opens with the restaurant. We will announce the delivery areas on the list.</p>
+        <button class="btn btn--gold" type="button" data-open-panel="opening-list">Join the opening list</button>
+      </div>
+      <div role="tabpanel" data-tabpanel="reserve" hidden>
+        <p class="panel__lead">Table booking opens with the restaurant. Join the list to know the day we start taking reservations.</p>
+        <button class="btn btn--gold" type="button" data-open-panel="opening-list">Join the opening list</button>
+      </div>
+    </div>
+    {contact.phone && <p class="panel__note">Prefer to talk? Call <a href={`tel:${contact.phoneHref}`}>{contact.phone}</a>.</p>}
+  </div>
+</dialog>
+
+<script>
+  const panels = ['city', 'opening-list', 'order'];
+  const byId = (id) => document.getElementById(id);
+
+  function open(id) {
+    const dlg = byId(id);
+    if (!dlg || typeof dlg.showModal !== 'function' || dlg.open) return;
+    dlg.showModal();
+    document.body.style.overflow = 'hidden';
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    const first = dlg.querySelector('input, button:not([data-close-panel]), [href]');
+    if (first) first.focus();
+  }
+  function close(dlg) {
+    if (!dlg?.open) return;
+    dlg.close();
+    document.body.style.overflow = '';
+    if (location.hash && panels.includes(location.hash.slice(1)) && history.replaceState) {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
+  }
+
+  // Open triggers (delegated so dynamically shown buttons work too).
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest('[data-open-panel]');
+    if (opener) { e.preventDefault(); open(opener.getAttribute('data-open-panel')); return; }
+    const closer = e.target.closest('[data-close-panel]');
+    if (closer) { close(closer.closest('dialog')); }
+  });
+
+  // Native Esc + click on backdrop.
+  panels.forEach((id) => {
+    const dlg = byId(id);
+    if (!dlg) return;
+    dlg.addEventListener('cancel', () => { document.body.style.overflow = ''; });
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) close(dlg); });
+  });
+
+  // Deep links: open the panel named in the hash on load.
+  const h = location.hash.slice(1);
+  if (panels.includes(h)) requestAnimationFrame(() => open(h));
+
+  // City finder: pick a city, remember it, reveal the per-city form.
+  const cityForm = document.querySelector('[data-city-form]');
+  const cityTarget = document.querySelector('[data-city-target]');
+  document.querySelectorAll('[data-city-pick]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const city = btn.getAttribute('data-city-pick');
+      document.dispatchEvent(new CustomEvent('osthir:city', { detail: city }));
+      if (cityTarget) cityTarget.textContent = city;
+      cityForm?.removeAttribute('hidden');
+      cityForm?.querySelector('input')?.focus();
+    });
+  });
+
+  // Use my location: geolocation on click only. We do not reverse geocode
+  // (no third-party call), we just invite a pick. Honest either way.
+  const geoBtn = document.querySelector('[data-use-location]');
+  const geoNote = document.querySelector('[data-geo-note]');
+  geoBtn?.addEventListener('click', () => {
+    if (!navigator.geolocation) { if (geoNote) { geoNote.textContent = 'Pick your city below.'; geoNote.hidden = false; } return; }
+    navigator.geolocation.getCurrentPosition(
+      () => { if (geoNote) { geoNote.textContent = 'Got it. Choose the closest city below.'; geoNote.hidden = false; } },
+      () => { if (geoNote) { geoNote.textContent = 'No problem. Pick your city below.'; geoNote.hidden = false; } },
+    );
+  });
+
+  // Prefill the city field in the opening-list form from the stored choice.
+  const cityField = document.querySelector('[data-city-field]');
+  if (cityField && typeof window.osthirCity === 'function') {
+    const c = window.osthirCity();
+    if (c) cityField.value = c;
+  }
+
+  // Order panel tabs.
+  const tabs = [...document.querySelectorAll('.tab')];
+  tabs.forEach((tab) => tab.addEventListener('click', () => {
+    const name = tab.getAttribute('data-tab');
+    tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+    document.querySelectorAll('[data-tabpanel]').forEach((p) => {
+      p.hidden = p.getAttribute('data-tabpanel') !== name;
+    });
+  }));
+
+  // Inert form submit: no backend yet, so confirm honestly and collect nothing.
+  document.querySelectorAll('[data-list-form], [data-city-form]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const ok = form.querySelector('[data-ok]');
+      form.querySelectorAll('input, button[type="submit"]').forEach((el) => { el.disabled = true; });
+      if (ok) ok.hidden = false;
+    });
+  });
+</script>

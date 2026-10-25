@@ -1,6 +1,7 @@
 ---
 import Picture from './Picture.astro';
 import { getCategory } from '../data/menu.js';
+import { href } from '../lib/url.js';
 import site from '../config/site.js';
 
 const { item, light = false, revealDelay } = Astro.props;
@@ -23,7 +24,7 @@ const price =
   </div>
   <div class="card__body">
     <span class="card__cat">{category?.name}</span>
-    <h3 class="card__title"><a href={`/menu/${item.slug}/`}>{item.name}</a></h3>
+    <h3 class="card__title"><a href={href(`/menu/${item.slug}/`)}>{item.name}</a></h3>
     <p class="card__text">{item.short}</p>
     {price && <p class="dish__price">{price}</p>}
     <span class="card__link">View dish <span aria-hidden="true">→</span></span>

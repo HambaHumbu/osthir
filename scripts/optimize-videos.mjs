@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Osthir Test — video optimization pipeline.
+ * Osthir Flavours, video optimization pipeline.
  *
  * Uses the bundled ffmpeg (npm package `ffmpeg-static`) to read the ORIGINAL
  * mp4 files in the project root (never modifies them) and produce web

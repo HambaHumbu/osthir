@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Picture from '../../components/Picture.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { breadcrumbJsonLd } from '../../lib/seo.js';
+import { href } from '../../lib/url.js';
+import { posts } from '../../data/journal.js';
+
+const crumbs = [
+  { name: 'Home', path: '/' },
+  { name: 'Journal', path: '/journal/' },
+];
+const fmt = (d) => new Date(d + 'T00:00:00').toLocaleDateString('en-CA', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<BaseLayout
+  title="Journal"
+  description="Short, useful notes from Osthir Flavours on biryani, dum cooking, tea and the food we are opening with."
+  jsonld={[breadcrumbJsonLd(crumbs)]}
+>
+  <header class="page-hero texture-leaf">
+    <div class="container page-hero__inner">
+      <Breadcrumbs items={crumbs} />
+      <p class="kicker" data-reveal>Journal</p>
+      <h1 class="display-hero" data-reveal style="--reveal-delay:100ms">Notes from<br /><span class="serif-i gold">the kitchen</span></h1>
+      <p class="lede" data-reveal style="--reveal-delay:200ms">
+        Short pieces on how the food is made and why it tastes the way it does. More as we open.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid grid-2">
+        {posts.map((p, i) => (
+          <article class="jcard" data-reveal style={`--reveal-delay:${i * 100}ms`}>
+            <a class="jcard__media frame" href={href(`/journal/${p.slug}/`)} aria-label={p.title}>
+              <Picture name={p.image} alt={p.alt} sizes="(min-width: 900px) 45vw, 100vw" />
+            </a>
+            <div class="jcard__text">
+              <p class="jcard__date">{fmt(p.date)}</p>
+              <h2 class="title-1"><a class="link-quiet" href={href(`/journal/${p.slug}/`)}>{p.title}</a></h2>
+              <p style="color: var(--text-soft)">{p.excerpt}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

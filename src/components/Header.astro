@@ -2,6 +2,7 @@
 import site from '../config/site.js';
 import { orderAction } from '../lib/order.js';
 import { logo } from '../lib/media.js';
+import { href } from '../lib/url.js';
 
 const order = orderAction();
 const pathname = Astro.url.pathname;
@@ -15,14 +16,15 @@ const links = [
   { href: '/contact/', label: 'Contact' },
 ];
 
-const isActive = (href) =>
-  href === '/' ? pathname === '/' : pathname.startsWith(href);
+// Astro.url.pathname includes the base prefix, so compare against href().
+const isActive = (path) =>
+  path === '/' ? pathname === href('/') : pathname.startsWith(href(path));
 ---
 <header class="site-header" id="site-header">
   <div class="container container--wide nav">
-    <a href="/" class="brand" aria-label={`${site.name} — home`}>
+    <a href={href('/')} class="brand" aria-label={`${site.name}, home`}>
       <span class="brand__mark" style={`background:${logo.background}`}>
-        <img src="/media/img/logo-256.webp" width="44" height="44" alt="" fetchpriority="high" />
+        <img src={href('/media/img/logo-256.webp')} width="44" height="44" alt="" fetchpriority="high" />
       </span>
       <span class="brand__word">
         {site.name}
@@ -36,17 +38,14 @@ const isActive = (href) =>
           <li>
             <a
               class="nav__link"
-              href={link.href}
+              href={href(link.href)}
               aria-current={isActive(link.href) ? 'page' : undefined}
             >{link.label}</a>
           </li>
         ))}
-        <li>
-          <a
-            class="btn btn--gold nav__cta"
-            href={order.href}
-            {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          >{order.label}</a>
+        <li class="hdr-actions">
+          <a class="btn btn--ghost nav__cta" href="#order" data-open-panel="order">Order and reserve</a>
+          <a class="btn btn--gold nav__cta" href="#opening-list" data-open-panel="opening-list">Join the opening list</a>
         </li>
       </ul>
     </nav>
@@ -74,7 +73,7 @@ const isActive = (href) =>
       {links.map((link, i) => (
         <li>
           <a
-            href={link.href}
+            href={href(link.href)}
             style={`transition-delay:${60 + i * 45}ms`}
             aria-current={isActive(link.href) ? 'page' : undefined}
           >
@@ -84,14 +83,20 @@ const isActive = (href) =>
         </li>
       ))}
       <li>
-        <a href={order.href} style={`transition-delay:${60 + links.length * 45}ms`} {...(order.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-          {order.label}
+        <a href="#opening-list" data-open-panel="opening-list" style={`transition-delay:${60 + links.length * 45}ms`}>
+          Join the opening list
+          <span class="idx">→</span>
+        </a>
+      </li>
+      <li>
+        <a href="#order" data-open-panel="order" style={`transition-delay:${60 + (links.length + 1) * 45}ms`}>
+          Order and reserve
           <span class="idx">→</span>
         </a>
       </li>
     </ul>
   </nav>
-  <p class="drawer__foot">{site.tagline}</p>
+  <p class="drawer__foot">{site.tagline}<br />Opening soon. Open 11 AM to 2 AM, every day.</p>
 </div>
 
 <script>

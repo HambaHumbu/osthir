@@ -81,7 +81,7 @@ const email = site.contact.email;
     const messages = {
       valueMissing: 'This field is required.',
       typeMismatch: 'Please enter a valid value (check the format).',
-      tooShort: 'This is a little short — please add more detail.',
+      tooShort: 'This is a little short, please add more detail.',
       rangeUnderflow: 'That number is too low.',
       rangeOverflow: 'That number is too high.',
     };
@@ -144,7 +144,7 @@ const email = site.contact.email;
             body: JSON.stringify(data),
           });
           if (!res.ok) throw new Error(`HTTP ${res.status}`);
-          showStatus('ok', 'Thank you — your enquiry has been sent. We will reply as soon as we can.');
+          showStatus('ok', 'Thank you, your enquiry has been sent. We will reply as soon as we can.');
           form.reset();
         } catch {
           showStatus('err', 'Sorry, the enquiry could not be sent. Please try again, or contact us directly.');
@@ -159,11 +159,11 @@ const email = site.contact.email;
           Object.entries(data).map(([k, v]) => `${k}: ${v}`).join('\n'),
         );
         window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-        showStatus('info', 'Opening your email app with a pre-filled message — press send there to reach us.');
+        showStatus('info', 'Opening your email app with a pre-filled message, press send there to reach us.');
       } else {
         showStatus(
           'info',
-          'Thank you for your interest. Online enquiries are not connected yet — please check back soon, or see the Visit page for other ways to reach us.',
+          'Thank you for your interest. Online enquiries are not connected yet, please check back soon, or see the Visit page for other ways to reach us.',
         );
       }
     });
